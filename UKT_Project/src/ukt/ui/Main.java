@@ -1,6 +1,7 @@
 package ukt.ui;
 
 import javax.swing.JFrame;
+
 import javax.swing.SwingUtilities;
 
 public class Main extends JFrame {
