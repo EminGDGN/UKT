@@ -11,64 +11,100 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class KenningToObject {
-	JSONParser parser;
-	JSONObject graph;
-	Graph g;
+	private JSONParser parser;
+	private String filePath;
 	
 	public KenningToObject() {
 		this.parser = new JSONParser();
-		this.graph = null;
-		this.g = null;
+		this.filePath = "";
 	}
 	
-	@SuppressWarnings("unchecked")
 	public KenningToObject(String jsonFile) throws FileNotFoundException, IOException, ParseException {
 		this.parser = new JSONParser();
-		
-		graph = (JSONObject) ((JSONObject) new JSONParser().parse(new FileReader(jsonFile))).get("graph");
-		
-		Graph result = new Graph((String)graph.get("id"), (String)graph.get("name"));
-		
-		JSONArray allNodesJson = (JSONArray) graph.get("nodes");
-		
-		ArrayList<Node> nodes = new ArrayList<Node>();
-         
-		for (Object n : allNodesJson) {
-			Node tempN = new Node((String)((JSONObject)n).get("id"), (String)((JSONObject)n).get("name"));
-			
-			ArrayList<Interface> interfaces = new ArrayList<Interface>();
-			
-			JSONArray allInterfacesJson = (JSONArray) ((JSONObject) n).get("interfaces");
-			
-			for (Object i : allInterfacesJson) {
-				Interface tempI = new Interface((String)((JSONObject)i).get("id"), (String)((JSONObject)i).get("name"));
-				tempI.setDirection((String)((JSONObject)i).get("direction"));
-				interfaces.add(tempI);
-			}
-			
-			tempN.setInterfaces(interfaces);
-			
-			/////
-			ArrayList<Property> properties = new ArrayList<Property>();
-			
-			JSONArray allPropertiesJson = (JSONArray) ((JSONObject) n).get("properties");
-			
-			for (Object i : allPropertiesJson) {
-				Property tempP = new Property((String)((JSONObject)i).get("id"), (String)((JSONObject)i).get("name"));
-				properties.add(tempP);
-			}
-			
-			tempN.setInterfaces(interfaces);
-			
-			tempN.setProperties(properties);
-			
-			nodes.add(tempN);
-		}
-		result.setNodes(nodes);
-		g = result;
+		this.filePath = jsonFile;
 	}
 	
-	public Graph getGraph() {
-		return this.g;
+	public void setPath (String path) {
+		this.filePath = path;
+	}
+	
+	public JSONObject getGraphJson () throws IOException, ParseException {
+		return (JSONObject) ((JSONObject) this.parser.parse(new FileReader(this.filePath))).get("graph");
+	}
+	
+	public Graph getGraph () throws IOException, ParseException {
+		JSONObject jGraph = this.getGraphJson();
+		Graph result = new Graph((String)jGraph.get("id"), (String)jGraph.get("name"));
+		result.setNodes(getNodes());
+		result.setConnection(getConnections(result.getInterfaces()));
+		return result;
+	}
+	
+	public ArrayList<Connection> getConnections(ArrayList<Interface> interfaces) throws IOException, ParseException {
+		JSONObject jGraph = this.getGraphJson();
+		JSONArray allConnectionsJson = (JSONArray) jGraph.get("connections");
+		ArrayList<Connection> result = new ArrayList<Connection>();
+		
+		for (Object n : allConnectionsJson) {
+			String idC = (String)((JSONObject)n).get("id");
+			String idF = (String)((JSONObject)n).get("from");
+			String idT = (String)((JSONObject)n).get("to");
+			
+			Interface interfaceFrom = null;
+			Interface interfaceTo = null;
+			
+			for (Interface i : interfaces) {
+				if (i.getId().equals(idF)) {
+					interfaceFrom = i;
+				} else if (i.getId().equals(idT)) {
+					interfaceTo = i;
+				}
+			}
+			
+			Connection tempC = new Connection(idC, interfaceFrom, interfaceTo);
+			result.add(tempC);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Node> getNodes() throws IOException, ParseException {
+		JSONObject jGraph = this.getGraphJson();
+		JSONArray allNodesJson = (JSONArray) jGraph.get("nodes");
+		ArrayList<Node> result = new ArrayList<Node>();
+		
+		for (Object n : allNodesJson) {
+			Node tempN = new Node((String)((JSONObject)n).get("id"), (String)((JSONObject)n).get("name"));
+			tempN.setInterfaces(this.getInterfaces((JSONObject)n));
+			tempN.setProperties(this.getProperties((JSONObject)n));
+			result.add(tempN);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Interface> getInterfaces(JSONObject node) {
+		ArrayList<Interface> result = new ArrayList<Interface>();
+		JSONArray allInterfacesJson = (JSONArray) node.get("interfaces");
+		
+		for (Object i : allInterfacesJson) {
+			Interface tempI = new Interface((String)((JSONObject)i).get("id"), (String)((JSONObject)i).get("name"));
+			tempI.setDirection((String)((JSONObject)i).get("direction"));
+			result.add(tempI);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Property> getProperties(JSONObject node) {
+		ArrayList<Property> result = new ArrayList<Property>();
+		JSONArray allPropertiesJson = (JSONArray) node.get("properties");
+		
+		for (Object i : allPropertiesJson) {
+			Property tempP = new Property((String)((JSONObject)i).get("id"), (String)((JSONObject)i).get("name"));
+			result.add(tempP);
+		}
+		
+		return result;
 	}
 }

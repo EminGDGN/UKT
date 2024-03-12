@@ -16,6 +16,10 @@ public class Node {
 		properties = new ArrayList<>();
 	}
 	
+	public ArrayList<Interface> getInterfaces () {
+		return this.interfaces;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void setInterfaces(ArrayList<Interface> interfaces) {
 		this.interfaces = (ArrayList<Interface>)interfaces.clone();
@@ -27,13 +31,12 @@ public class Node {
 	}
 	
 	public void print() {
-		System.out.println("	Le noeud d'id : " + this.id + " à pour nom : " + this.name);
-		System.out.println("	Les interfaces de ce noeud sont : ");
+		System.out.println("Le noeud d'id : " + this.id + " à pour nom : " + this.name);
+		System.out.println("Les interfaces de ce noeud sont : ");
 		for (Interface i : this.interfaces) {
 			i.print();
 		}
-		System.out.println();
-		System.out.println("	Les propriétés de ce noeud sont : ");
+		System.out.println("Les propriétés de ce noeud sont : ");
 		for (Property p : this.properties) {
 			p.print();
 		}

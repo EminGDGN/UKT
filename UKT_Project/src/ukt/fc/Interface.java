@@ -38,6 +38,10 @@ public class Interface {
 		}
 	}
 	
+	public String getId() {
+		return this.id;
+	}
+	
 	public String directionToString (Direction d) {
 		switch (d) {
 		case IN:
@@ -52,6 +56,6 @@ public class Interface {
 	}
 	
 	public void print() {
-		System.out.println("			L'interface d'id : " + this.id + " à pour nom : " + this.name + " et est " + (this.enabled ? "active" : "désactive") + " de direction " + this.directionToString(this.direction));
+		System.out.println("L'interface d'id : " + this.id + " à pour nom : " + this.name + " elle est " + (this.enabled ? "active" : "désactive") + " et de direction " + this.directionToString(this.direction));
 	}
 }
