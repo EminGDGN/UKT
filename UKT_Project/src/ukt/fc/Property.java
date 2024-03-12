@@ -13,6 +13,6 @@ public class Property {
 	}
 	
 	public void print() {
-		System.out.println("		La propriété d'id : " + this.id + " à pour nom : " + this.name + " et pour valeur ");
+		System.out.println("La propriété d'id : " + this.id + " à pour nom : " + this.name + " et pour valeur ");
 	}
 }
