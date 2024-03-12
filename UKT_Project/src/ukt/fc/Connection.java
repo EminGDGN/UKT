@@ -11,4 +11,10 @@ public class Connection {
 		this.from = from;
 		this.to = to;
 	}
+	
+	public void print() {
+		System.out.println("	La connection d'id : " + this.id + " vas de ");
+		from.print();
+		to.print();
+	}
 }
