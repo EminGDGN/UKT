@@ -1,4 +1,4 @@
-package ukt.fc;
+package ukt.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

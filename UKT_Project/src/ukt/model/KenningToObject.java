@@ -1,4 +1,4 @@
-package ukt.fc;
+package ukt.model;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,6 +9,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import ukt.model.kenningModel.Connection;
+import ukt.model.kenningModel.Graph;
+import ukt.model.kenningModel.Interface;
+import ukt.model.kenningModel.Node;
+import ukt.model.kenningModel.Property;
 
 public class KenningToObject {
 	private JSONParser parser;
