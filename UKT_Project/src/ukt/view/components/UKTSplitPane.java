@@ -1,4 +1,4 @@
-package ukt.ui;
+package ukt.view.components;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;

@@ -1,4 +1,4 @@
-package ukt.fc;
+package ukt.model.kenningModel;
 
 public class Connection {
 
