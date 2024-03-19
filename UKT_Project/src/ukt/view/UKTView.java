@@ -2,14 +2,14 @@ package ukt.view;
 
 import java.awt.BorderLayout;
 import java.io.File;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import ukt.controller.FileType;
+import ukt.controller.Panel;
 import ukt.controller.UKTController;
+import ukt.view.components.UKTCenterPanel;
 import ukt.view.components.UKTMenuBar;
 
 public class UKTView extends JFrame {
@@ -19,7 +19,9 @@ public class UKTView extends JFrame {
 	
 	/* UI Components */
 	private JFileChooser fileChooser;
+	private JOptionPane optionPane;
 	private UKTMenuBar menuBar;
+	private UKTCenterPanel centerPanel;
 
 	/* Constructor */
 	public UKTView(UKTController controller) {
@@ -32,12 +34,14 @@ public class UKTView extends JFrame {
 		
 		fileChooser = new JFileChooser();
 		menuBar = new UKTMenuBar(controller);
+		centerPanel = new UKTCenterPanel(controller);
+		optionPane = new JOptionPane();
 		
 		// Set menu bar
 		setJMenuBar(menuBar);
 
-		// Add center split pane
-		// add(new UKTSplitPane(controller), BorderLayout.CENTER);
+		// Add center panel
+		add(centerPanel, BorderLayout.CENTER);
 
 		// Add bottom tool bar
 		// add(new UKTBottomBar(controller), BorderLayout.SOUTH);
@@ -52,9 +56,17 @@ public class UKTView extends JFrame {
 
 		// Exit on closing window
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		// Set first panel
+		setPanel(Panel.HOME_PANEL);
 
 		// Set the window visible
 		setVisible(true);
+	}
+	
+	public void setPanel(Panel p) {
+		this.centerPanel.setPanelVisible(p);
+		centerPanel.repaint();
 	}
 	
 	public File showFileChooser(String title, FileType type) {
@@ -69,6 +81,15 @@ public class UKTView extends JFrame {
         
         return null;
     }
+	
+	public String showOptionPane(String title) {
+		String userSelection = JOptionPane.showInputDialog(null, title);
+        if (userSelection != null) {
+            return userSelection;
+        } else {
+            return null;
+        }
+	}
 	
 	public void displayErrorMessage(String errorMessage) {
 		JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);

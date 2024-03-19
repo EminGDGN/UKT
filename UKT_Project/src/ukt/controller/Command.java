@@ -1,6 +1,9 @@
 package ukt.controller;
 
 public enum Command {
+	CREATE_WORKFLOW,
+	ADD_PROCESS_WORKFLOW,
+	REMOVE_PROCESS_WORKFLOW,
 	LOAD_GRAPH,
 	EXIT_APPLICATION
 }

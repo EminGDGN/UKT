@@ -21,10 +21,18 @@ public class UKTMenuBar extends JMenuBar {
 		// File menu
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.setMnemonic('F');
+		
+		JMenuItem createWorkflowFileMenu = new JMenuItem("Create CWL workflow");
+		createWorkflowFileMenu.setMnemonic('W');
+		createWorkflowFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK));
+		createWorkflowFileMenu.addActionListener((ActionEvent e) -> {controller.handleCommand(Command.CREATE_WORKFLOW);});
+		fileMenu.add(createWorkflowFileMenu);
+		
+		fileMenu.addSeparator();
 
-		JMenuItem loadGraphFileMenu = new JMenuItem("Load graph file");
-		loadGraphFileMenu.setMnemonic('L');
-		loadGraphFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
+		JMenuItem loadGraphFileMenu = new JMenuItem("Load Kenning graph");
+		loadGraphFileMenu.setMnemonic('K');
+		loadGraphFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
 		loadGraphFileMenu.addActionListener((ActionEvent e) -> {controller.handleCommand(Command.LOAD_GRAPH);});
 		fileMenu.add(loadGraphFileMenu);
 
