@@ -36,7 +36,7 @@ public class Output {
 			return " ["+this.name+"]\n";
 		}else {
 			String s = this.tab() + this.name + ": \n" +
-					this.tab() + "\tType: " + this.type.toString() + "\n";
+					this.tab() + "  type: " + this.type.toString() + "\n";
 			for (OutputParameter parameter : parameters) {
 				s += parameter.toString();
 			}
@@ -45,7 +45,7 @@ public class Output {
 	}
 	
 	public String tab() {
-		return this.parent.tab() + "\t";
+		return this.parent.tab() + "  ";
 		
 	}
 }

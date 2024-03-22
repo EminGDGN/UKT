@@ -11,6 +11,6 @@ public abstract class InputParameter {
 	}
 	
 	public String tab() {
-		return this.parent.tab() +  "\t";
+		return this.parent.tab() +  "  ";
 	}
 }

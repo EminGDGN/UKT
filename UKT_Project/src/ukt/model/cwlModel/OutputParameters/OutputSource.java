@@ -13,7 +13,7 @@ public class OutputSource extends OutputParameter{
 	
 	@Override
 	public String toString() {
-		return this.tab() + "OutpuSource: " + this.source;
+		return this.tab() + "outputSource: " + this.source;
 	}
 
 }

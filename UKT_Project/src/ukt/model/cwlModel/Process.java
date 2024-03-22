@@ -48,14 +48,14 @@ public abstract class Process {
 	
 	public String tab() {
 		if(this.parent!= null) {
-			return this.parent.tab() + "\t\t";
+			return this.parent.tab() + "    ";
 		}
 		return "";
 	}
 	
 	public String almostTab() {
 		if(this.parent!= null) {
-			return this.parent.tab() + "\t";
+			return this.parent.tab() + "  ";
 		}
 		return "";
 	}

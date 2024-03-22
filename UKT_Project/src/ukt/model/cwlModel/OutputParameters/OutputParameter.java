@@ -11,7 +11,7 @@ public abstract class OutputParameter {
 	}
 	
 	public String tab() {
-		return this.parent.tab() + "\t";
+		return this.parent.tab() + "  ";
 	}
 	
 	

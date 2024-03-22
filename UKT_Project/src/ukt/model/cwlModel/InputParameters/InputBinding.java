@@ -25,6 +25,6 @@ public class InputBinding extends InputParameter{
 		@Override
 		public String toString() {
 			return this.tab() + "InputBinding: " +
-				   this.tab() + "\t" + "position: " + this.position;
+				   this.tab() + "  " + "position: " + this.position;
 		}
 }

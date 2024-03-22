@@ -31,7 +31,7 @@ public class Input {
 	@Override
 	public String toString() {
 		String s = this.tab() + this.name + ": \n" +
-				((this.path != null)? this.tab() + "\tsource: " + this.path : this.tab() + "\ttype: " + this.type.toString());
+				((this.path != null)? this.tab() + "  source: " + this.path : this.tab() + "  type: " + this.type.toString());
 		for (InputParameter parameter : parameters) {
 			s += parameter.toString();
 		}
@@ -40,7 +40,7 @@ public class Input {
 	}
 	
 	public String tab() {
-		return this.parent.tab() + "\t";
+		return this.parent.tab() + "  ";
 		
 	}
 }
