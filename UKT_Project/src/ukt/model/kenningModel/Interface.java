@@ -8,10 +8,10 @@ public class Interface {
 		INOUT
 	}
 
-	private String id;
-	private String name;
-	private boolean enabled;
-	private Direction direction;
+	private String id; // Id of the interface
+	private String name; // Name of the interface
+	private boolean enabled; // Is the interface enabled
+	private Direction direction; // The direction of this interface (In, Out, Inout)
 	
 	public Interface(String id, String name) {
 		this.id = id;
@@ -42,6 +42,11 @@ public class Interface {
 		return this.id;
 	}
 	
+	/**
+	 * 
+	 * @param d a direction
+	 * @return A string equivalent to the direction d
+	 */
 	public String directionToString (Direction d) {
 		switch (d) {
 		case IN:
@@ -55,6 +60,9 @@ public class Interface {
 		}
 	}
 	
+	/**
+	 * Print all informations about the node
+	 */
 	public void print() {
 		System.out.println("L'interface d'id : " + this.id + " à pour nom : " + this.name + " elle est " + (this.enabled ? "active" : "désactive") + " et de direction " + this.directionToString(this.direction));
 	}

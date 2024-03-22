@@ -19,4 +19,24 @@ public class Connection {
 		to.print();
 		System.out.println();
 	}
+	
+	public String getId () {
+		return this.id;
+	}
+	
+	public Interface getInterfaceFrom() {
+		return this.from;
+	}
+	
+	public Interface getInterfaceTo() {
+		return this.to;
+	}
+	
+	public String getIdFrom() {
+		return this.from.getId();
+	}
+	
+	public String getIdTo() {
+		return this.to.getId();
+	}
 }

@@ -34,6 +34,65 @@ public class Graph {
 		return allInterfaces;
 	}
 	
+	public ArrayList<Node> getInitialNodes() {
+		ArrayList<Node> initialNodes = new ArrayList<Node>();
+		
+		for (Node n : this.nodes) {
+			boolean initial = true;
+			for (Interface i : n.getInterfaces()) {
+				for (Connection c : this.connections) {
+					if (c.getIdTo().equals(i.getId())) {
+						initial = false;
+					}
+				}
+			}
+			if (initial) {
+				initialNodes.add(n);
+			}
+		}
+		
+		return initialNodes;
+	}
+	
+	public Node getNodeOfInterface(Interface i) {
+		for (Node n : this.nodes) {
+			if (n.containInterface(i)) {
+				return n;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Node> getPrecedent(Node n) {
+		ArrayList<Node> precedent = new ArrayList<>();
+		
+		for (Interface i : n.getInterfaces()) {
+			for (Connection c : this.connections) {
+				if (c.getIdTo().equals(i.getId())) {
+					if (!precedent.contains(this.getNodeOfInterface(c.getInterfaceFrom()))) {
+						precedent.add(this.getNodeOfInterface(c.getInterfaceFrom()));
+					}
+				}
+			}
+		}
+		
+		return precedent;
+	}
+	
+	public ArrayList<Node> getSuivant(Node n) {
+		ArrayList<Node> suivant = new ArrayList<>();
+		for (Interface i : n.getInterfaces()) {
+			for (Connection c : this.connections) {
+				if (c.getIdFrom().equals(i.getId())) {
+					if (!suivant.contains(this.getNodeOfInterface(c.getInterfaceTo()))) {
+						suivant.add(this.getNodeOfInterface(c.getInterfaceTo()));
+					}
+				}
+			}
+		}
+		return suivant;
+	}
+	
 	public void print() {
 		System.out.println("Le graph d'id : " + this.id + " à pour nom : " + this.name);
 		System.out.println("Les noeuds de ce graph sont : ");
