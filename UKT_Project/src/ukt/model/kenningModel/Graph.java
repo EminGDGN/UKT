@@ -38,15 +38,7 @@ public class Graph {
 		ArrayList<Node> initialNodes = new ArrayList<Node>();
 		
 		for (Node n : this.nodes) {
-			boolean initial = true;
-			for (Interface i : n.getInterfaces()) {
-				for (Connection c : this.connections) {
-					if (c.getIdTo().equals(i.getId())) {
-						initial = false;
-					}
-				}
-			}
-			if (initial) {
+			if (n.isInitial()) {
 				initialNodes.add(n);
 			}
 		}
