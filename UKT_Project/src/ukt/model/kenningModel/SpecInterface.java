@@ -1,23 +1,15 @@
 package ukt.model.kenningModel;
 
-public class Interface {
-	
-	public enum Direction {
-		IN,
-		OUT,
-		INOUT
-	}
+import ukt.model.kenningModel.Interface.Direction;
 
-	private String id; // Id of the interface
-	private String name; // Name of the interface
-	private boolean enabled; // Is the interface enabled
-	private Direction direction; // The direction of this interface (In, Out, Inout)
+public class SpecInterface {
+
+	private String name;
+	private Direction direction;
 	private String type;
 	
-	public Interface(String id, String name) {
-		this.id = id;
+	public SpecInterface(String name) {
 		this.name = name;
-		this.enabled = true;
 		this.direction = Direction.IN;
 		this.type = "String";
 	}
@@ -26,16 +18,16 @@ public class Interface {
 		return this.direction;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String getType() {
 		return this.type;
 	}
 	
-	public void setType(String type) {
+	public void setType (String type) {
 		this.type = type;
-	}
-	
-	public void setEnable (Boolean enable) {
-		this.enabled = enable;
 	}
 	
 	public void setDirection (Direction dir) {
@@ -50,14 +42,6 @@ public class Interface {
 		} else {
 			this.direction = Direction.INOUT;
 		}
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public String getId() {
-		return this.id;
 	}
 	
 	/**
@@ -82,6 +66,6 @@ public class Interface {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("L'interface d'id : " + this.id + " à pour nom : " + this.name + " elle est " + (this.enabled ? "active" : "désactive") + " et de direction " + this.directionToString(this.direction) + " et de type " + this.type);
+		System.out.println("Voici la spécification de l'interface : " + this.name + " elle est de type " + this.type + " et de direction " + this.directionToString(this.direction));
 	}
 }
