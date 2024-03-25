@@ -3,9 +3,9 @@ package ukt.model.kenningModel;
 import ukt.model.kenningModel.Interface.Direction;
 
 public class Parameter {
-	private String type;
-	private String name;
-	private Direction direction;
+	private String type; // Type of the parameter (String, int, boolean...)
+	private String name; // Name of the parameter
+	private Direction direction; // Direction of the property (In, Out, Inout)
 	
 	
 	public Parameter (String name, String type, Direction direction) {
@@ -45,6 +45,6 @@ public class Parameter {
 	}
 	
 	public void print() {
-		System.out.println("Paramètre : " + this.name + " est de type " + this.type + " et de direction " + this.directionToString(this.direction));
+		System.out.println("The parameter : " + this.name + " as type " + this.type + " and for direction : " + this.directionToString(this.direction));
 	}
 }

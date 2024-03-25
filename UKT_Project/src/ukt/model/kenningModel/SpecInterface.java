@@ -4,9 +4,9 @@ import ukt.model.kenningModel.Interface.Direction;
 
 public class SpecInterface {
 
-	private String name;
-	private Direction direction;
-	private String type;
+	private String name; // Name of the interace
+	private Direction direction; // Direction of the interface (In, Out, Inout)
+	private String type; // Type of the interface (String, int, boolean ...)
 	
 	public SpecInterface(String name) {
 		this.name = name;
@@ -66,6 +66,6 @@ public class SpecInterface {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("Voici la spécification de l'interface : " + this.name + " elle est de type " + this.type + " et de direction " + this.directionToString(this.direction));
+		System.out.println("Here is the specification of the interface : " + this.name + " it's type is " + this.type + " and it's direction is " + this.directionToString(this.direction));
 	}
 }

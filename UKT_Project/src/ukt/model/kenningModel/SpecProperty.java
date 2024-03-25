@@ -25,6 +25,6 @@ public class SpecProperty {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("Voici la spécification de la propriété : " + this.name + " elle est de type " + this.type);
+		System.out.println("Here is the specification of the property : " + this.name + " it's type is : " + this.type);
 	}
 }

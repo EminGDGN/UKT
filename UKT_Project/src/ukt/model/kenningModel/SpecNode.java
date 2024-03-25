@@ -13,20 +13,6 @@ public class SpecNode {
 		properties = new ArrayList<>();
 	}
 	
-	/**
-	 * 
-	 * @param i an interface
-	 * @return true if this node contains the interface i false otherwise
-	 */
-	public boolean containInterface (SpecInterface i) {
-		for (SpecInterface it : this.interfaces) {
-			if (it.getName().equals(i.getName())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public ArrayList<SpecInterface>getSpecInterface() {
 		return this.interfaces;
 	}
@@ -53,12 +39,12 @@ public class SpecNode {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("Voici la spécification du noeud : " + this.name);
-		System.out.println("Les interfaces de ce noeud sont : ");
+		System.out.println("Here is the specification of the node : " + this.name);
+		System.out.println("The interfaces of this node are : ");
 		for (SpecInterface i : this.interfaces) {
 			i.print();
 		}
-		System.out.println("Les propriétés de ce noeud sont : ");
+		System.out.println("The properties of this node are : ");
 		for (SpecProperty p : this.properties) {
 			p.print();
 		}

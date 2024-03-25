@@ -20,9 +20,9 @@ import ukt.model.kenningModel.SpecNode;
 import ukt.model.kenningModel.SpecProperty;
 
 public class KenningToObject {
-	private JSONParser parser;
-	private String graphFilePath;
-	private String specFilePath;
+	private JSONParser parser; // The parser
+	private String graphFilePath; // The file path to the json graph file
+	private String specFilePath; // The file path to the json specification file used to create the graph
 	
 	public KenningToObject() {
 		this.parser = new JSONParser();
@@ -44,14 +44,31 @@ public class KenningToObject {
 		this.specFilePath = path;
 	}
 	
+	/**
+	 * 
+	 * @return the object representation of the json graph
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public JSONObject getGraphJson () throws IOException, ParseException {
 		return (JSONObject) ((JSONObject) this.parser.parse(new FileReader(this.graphFilePath))).get("graph");
 	}
 	
+	/**
+	 * 
+	 * @return the object representation of the json spec
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public JSONObject getSpecJson () throws IOException, ParseException {
 		return (JSONObject) this.parser.parse(new FileReader(this.specFilePath));
 	}
 	
+	/**
+	 * 
+	 * @return the graph created based on the json files
+	 * @throws Exception
+	 */
 	public Graph getGraph () throws Exception {
 		JSONObject jGraph = this.getGraphJson();
 		
@@ -67,6 +84,13 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param interfaces, list of all the interfaces of the graph in the json file
+	 * @return a list of all the connections of the graph in the json file
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<Connection> getConnections(ArrayList<Interface> interfaces) throws IOException, ParseException {
 		JSONObject jGraph = this.getGraphJson();
 		JSONArray allConnectionsJson = (JSONArray) jGraph.get("connections");
@@ -95,6 +119,12 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @return a list of all the nodes of the graph in the json graph file
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<Node> getNodes() throws IOException, ParseException {
 		JSONObject jGraph = this.getGraphJson();
 		JSONArray allNodesJson = (JSONArray) jGraph.get("nodes");
@@ -110,6 +140,12 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @return a list of all the specifications for nodes in the json spec file
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<SpecNode> getSpecNodes() throws IOException, ParseException {
 		JSONObject jSpec = this.getSpecJson();
 		JSONArray allNodesJson = (JSONArray) jSpec.get("nodes");
@@ -125,6 +161,13 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param nodes, list of all the specifications for nodes of the graph in the json file
+	 * @return a list of all the specifications for interfaces in the json spec file
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<SpecInterface> getAllSpecInterfaces(ArrayList<SpecNode> nodes) {
 		ArrayList<SpecInterface> result = new ArrayList<>();
 		
@@ -135,6 +178,13 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param nodes, list of all the specifications for nodes of the graph in the json file
+	 * @return a list of all the specifications for properties in the json spec file
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<SpecProperty> getAllSpecProperties(ArrayList<SpecNode> nodes) {
 		ArrayList<SpecProperty> result = new ArrayList<>();
 		
@@ -145,6 +195,13 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param node, a specification of a node of the graph in the json file
+	 * @return a list of all the specifications of interfaces of node
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public ArrayList<SpecInterface> getSpecInterfaces(JSONObject node) {
 		ArrayList<SpecInterface> result = new ArrayList<SpecInterface>();
 		JSONArray allInterfacesJson = (JSONArray) node.get("interfaces");
@@ -159,6 +216,11 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param node, a node of the graph in the json graph file
+	 * @return a list of all the interfaces of node
+	 */
 	public ArrayList<Interface> getInterfaces(JSONObject node) {
 		ArrayList<Interface> result = new ArrayList<Interface>();
 		JSONArray allInterfacesJson = (JSONArray) node.get("interfaces");
@@ -172,6 +234,11 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param node, a specification of a node of the graph in the json file
+	 * @return a list of all the specifications of properties of node
+	 */
 	public ArrayList<SpecProperty> getSpecProperties(JSONObject node) {
 		ArrayList<SpecProperty> result = new ArrayList<SpecProperty>();
 		JSONArray allPropertiesJson = (JSONArray) node.get("properties");
@@ -187,6 +254,14 @@ public class KenningToObject {
 		return result;
 	}
 	
+	/**
+	 * 
+	 * @param specNodes, all the nodes specification of the json spec file
+	 * @param nodes, all the node of the json graph file
+	 * Set the types of every interfaces of every nodes based on the specification
+	 * 
+	 * @throws Exception
+	 */
 	private void setInterfacesType (ArrayList<SpecNode> specNodes, ArrayList<Node> nodes) throws Exception {
 		ArrayList<SpecInterface> allSpecInterface = this.getAllSpecInterfaces(specNodes);
 		for (Node n : nodes) {
@@ -206,6 +281,14 @@ public class KenningToObject {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param specNodes, all the nodes specification of the json spec file
+	 * @param nodes, all the node of the json graph file
+	 * Set the types of every properties of every nodes based on the specification
+	 * 
+	 * @throws Exception
+	 */
 	private void setPropertiesType (ArrayList<SpecNode> specNodes, ArrayList<Node> nodes) throws Exception {
 		ArrayList<SpecProperty> allSpecProperties = this.getAllSpecProperties(specNodes);
 		for (Node n : nodes) {
@@ -225,6 +308,11 @@ public class KenningToObject {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param node, a node of the graph in the json graph file
+	 * @return a list of all the properties of node
+	 */
 	public ArrayList<Property> getProperties(JSONObject node) {
 		ArrayList<Property> result = new ArrayList<Property>();
 		JSONArray allPropertiesJson = (JSONArray) node.get("properties");

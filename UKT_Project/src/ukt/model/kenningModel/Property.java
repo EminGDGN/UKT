@@ -6,7 +6,7 @@ public class Property {
 
 	private String id; // Id of the property
 	private String name; // Name of the property
-	private String type;
+	private String type; // Type of the property (String, int, boolean ...)
 	//private String value; // Value of the property
 	
 	public Property(String id, String name) {
@@ -36,6 +36,6 @@ public class Property {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("La propriété d'id : " + this.id + " à pour nom : " + this.name + " et pour type " + this.type);
+		System.out.println("The property of id : " + this.id + " as the name : " + this.name + " and for type : " + this.type);
 	}
 }
