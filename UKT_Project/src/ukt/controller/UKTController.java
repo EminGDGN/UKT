@@ -29,8 +29,20 @@ public class UKTController {
 			case REMOVE_PROCESS_WORKFLOW:
 				this.removeProcessToWorkflow();
 				break;
-			case LOAD_GRAPH:
-				this.loadGraph();
+			case ADD_SPECIFICATION_FILE:
+				this.addSpecFile();
+				break;
+			case DISPLAY_KENNING_PANEL:
+				this.displayKenningPanel();
+				break;
+			case CONVERT_KENNING_TO_CWL:
+				this.convertKenningToCWL();
+				break;
+			case RUN_CWL:
+				this.runCWL();
+				break;
+			case ADD_GRAPH_FILE:
+				this.addGraphFile();
 				break;
 			case EXIT_APPLICATION:
 				this.exitApplication();
@@ -41,12 +53,7 @@ public class UKTController {
 	}
 	
 	private void createWorkflow() {
-		String filename = view.showOptionPane("Enter name of new CWL workflow");
-	    if (filename != null && !filename.trim().isEmpty() && !filename.contains(".cwl") && !filename.contains(".CWL")) {
-	        view.setPanel(Panel.WORKFLOW_PANEL);
-	    } else {
-	    	view.displayErrorMessage("Enter a valid name");
-	    }
+		view.setPanel(Panel.WORKFLOW_PANEL);
 	}
 	
 	private void addProcessToWorkflow() {
@@ -58,13 +65,29 @@ public class UKTController {
 	
 	private void removeProcessToWorkflow() {
 	}
+	
+	private void displayKenningPanel() {
+		view.setPanel(Panel.KENNING_PANEL);
+	}
 
-	private void loadGraph() {
+	private void addGraphFile() {
 		File selectedFile = view.showFileChooser("Select a graph", FileType.JSON);
 		if (selectedFile != null) {
-			view.setPanel(Panel.KENNING_PANEL);
-			model.processGraphFile(selectedFile);
+			
 		}
+	}
+	
+	private void addSpecFile() {
+		File selectedFile = view.showFileChooser("Select specifications", FileType.JSON);
+		if (selectedFile != null) {
+			
+		}
+	}
+	
+	private void convertKenningToCWL() {
+	}
+	
+	private void runCWL() {
 	}
 
 

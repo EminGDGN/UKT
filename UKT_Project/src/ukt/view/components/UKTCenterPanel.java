@@ -31,7 +31,7 @@ public class UKTCenterPanel extends JPanel {
 		setLayout(cardLayout);
 		
 		homePanel = new UKTHomePanel();
-		kenningPanel = new UKTKenningPanel();
+		kenningPanel = new UKTKenningPanel(controller);
 		workflowPanel = new UKTWorkflowPanel(controller);
 		
 		this.add(Panel.HOME_PANEL.getName(),homePanel);

@@ -22,7 +22,6 @@ public class UKTWorkflowPanel extends JPanel {
 	
 	private UKTController controller;
 	
-	private JTabbedPane tabbedPane;
 	
 	private JSplitPane splitPane;
 	
@@ -42,9 +41,6 @@ public class UKTWorkflowPanel extends JPanel {
 		this.controller = controller;
 		
 		setLayout(new BorderLayout());
-		
-		// Tabbed Pane
-		tabbedPane = new JTabbedPane();
 		
 		// Left panel
 		leftPanel = new JPanel(new BorderLayout());
@@ -71,11 +67,8 @@ public class UKTWorkflowPanel extends JPanel {
 		textArea = new JTextArea();
 		rightPanel.add(textArea, BorderLayout.CENTER);
 	
-		
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
 		
-		tabbedPane.add(splitPane);
-		
-		add(tabbedPane);
+		add(splitPane);
 	}
 }

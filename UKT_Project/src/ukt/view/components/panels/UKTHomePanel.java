@@ -5,7 +5,7 @@ import javax.swing.JPanel;
 
 public class UKTHomePanel extends JPanel {
 
-	public UKTHomePanel() {
-		add(new JLabel("Home"));
-	}
+    public UKTHomePanel() {
+        add(new JLabel("Home"));
+    }
 }
