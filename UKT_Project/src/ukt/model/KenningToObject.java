@@ -70,6 +70,9 @@ public class KenningToObject {
 	 * @throws Exception
 	 */
 	public Graph getGraph () throws Exception {
+		if (!this.isSpecComplete()) {
+			throw new Exception("The specification file is not complete");
+		}
 		JSONObject jGraph = this.getGraphJson();
 		
 		ArrayList<SpecNode> specNode = this.getSpecNodes();
@@ -323,5 +326,44 @@ public class KenningToObject {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * 
+	 * @return true if the json spec file is enough to build the graph of the json graph file
+	 * @throws Exception
+	 */
+	public boolean isSpecComplete () throws Exception {
+		ArrayList<SpecInterface> allSpecInterface = this.getAllSpecInterfaces(this.getSpecNodes());
+		ArrayList<SpecProperty> allSpecProperties = this.getAllSpecProperties(this.getSpecNodes());
+		for (Node n : this.getNodes()) {
+			ArrayList <Interface> interfaceN = n.getInterfaces();
+			for (Interface i : interfaceN) {
+				boolean specPresent = false;
+				for (SpecInterface si : allSpecInterface) {
+					if (si.getName().equals(i.getName())) {
+						specPresent = true;
+					}
+				}
+				if (!specPresent) {
+					return false;
+				}
+			}
+			
+			ArrayList <Property> propertiesN = n.getProperties();
+			for (Property p : propertiesN) {
+				boolean specPresent = false;
+				for (SpecProperty sp : allSpecProperties) {
+					if (sp.getName().equals(p.getName())) {
+						specPresent = true;
+						p.setType(sp.getType());
+					}
+				}
+				if (!specPresent) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
