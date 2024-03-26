@@ -1,23 +1,15 @@
 package ukt.model.kenningModel;
 
-public class Interface {
-	
-	public enum Direction {
-		IN,
-		OUT,
-		INOUT
-	}
+import ukt.model.kenningModel.Interface.Direction;
 
-	private String id; // Id of the interface
-	private String name; // Name of the interface
-	private boolean enabled; // Is the interface enabled
-	private Direction direction; // The direction of this interface (In, Out, Inout)
-	private String type; // Type of the interface (String, int, boolean...)
+public class SpecInterface {
+
+	private String name; // Name of the interace
+	private Direction direction; // Direction of the interface (In, Out, Inout)
+	private String type; // Type of the interface (String, int, boolean ...)
 	
-	public Interface(String id, String name) {
-		this.id = id;
+	public SpecInterface(String name) {
 		this.name = name;
-		this.enabled = true;
 		this.direction = Direction.IN;
 		this.type = "String";
 	}
@@ -26,16 +18,16 @@ public class Interface {
 		return this.direction;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String getType() {
 		return this.type;
 	}
 	
-	public void setType(String type) {
+	public void setType (String type) {
 		this.type = type;
-	}
-	
-	public void setEnable (Boolean enable) {
-		this.enabled = enable;
 	}
 	
 	public void setDirection (Direction dir) {
@@ -50,14 +42,6 @@ public class Interface {
 		} else {
 			this.direction = Direction.INOUT;
 		}
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public String getId() {
-		return this.id;
 	}
 	
 	/**
@@ -82,6 +66,6 @@ public class Interface {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("The interface of id : " + this.id + " as the name : " + this.name + " he is " + (this.enabled ? "active" : "inactive") + " and of direction " + this.directionToString(this.direction) + " and of type " + this.type);
+		System.out.println("Here is the specification of the interface : " + this.name + " it's type is " + this.type + " and it's direction is " + this.directionToString(this.direction));
 	}
 }
