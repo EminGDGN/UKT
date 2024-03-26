@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import ukt.model.cwlModel.InputParameters.InputParameter;
 
-public class Input {
+public class Input extends Linkable{
 
-	private Process parent;
-	private String name;
 	private ArrayList<InputParameter> parameters;
 	
 	public Input(String name, Process parent){
-		this.name = name;
-		this.parent = parent;
+		super(name, parent);
 		this.parameters = new ArrayList<>();
 	}
 	
@@ -28,10 +25,5 @@ public class Input {
 		}
 		return s;
 				
-	}
-	
-	public String tab() {
-		return this.parent.tab() + "  ";
-		
 	}
 }

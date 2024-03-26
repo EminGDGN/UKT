@@ -33,23 +33,16 @@ public static void main(String[] args) {
 		mainInput.addInputParameter(miParameter);
 		w.addInput(mainInput);
 		
-		//Outputs
-		Output output = new Output("out", w);
-		OutputParameter op1 = new OutputSource(output,"uppercase/uppercase_message");
-		OutputParameter op2 = new OutputType(output, Types.String);
-		output.addOutputParameter(op1);
-		w.addOutput(output);
-		
 		//Steps
 		//echo
 		Process echoProcess = new CommandLineTool(1.2f, "echo", "echo", w);
 		
 		Input in1 = new Input("message", echoProcess);
-		in1.addInputParameter(new Source(in1,"message"));
+		in1.addInputParameter(new Source(in1,mainInput));
 		echoProcess.addInput(in1);
 		
 		Output op3 = new Output("out", echoProcess);
-		op3.addOutputParameter(new OutputType(op3, Types.String));
+		//op3.addOutputParameter(new OutputType(op3, Types.String));
 		echoProcess.addOutput(op3);
 		
 		Step echo = new Step(echoProcess);
@@ -57,11 +50,21 @@ public static void main(String[] args) {
 		//uppercase
 		Process upperProcess = new CommandLineTool(1.2f, "uppercase", "uppercase", w);
 		Input in2 = new Input("message", upperProcess);
-		in2.addInputParameter(new Source(in2,  "echo/out"));
+		in2.addInputParameter(new Source(in2,  op3));
 		upperProcess.addInput(in2);
-		upperProcess.addOutput(new Output("uppercase_message", upperProcess));
+		Output op4 = new Output("uppercase_message", upperProcess);
+		upperProcess.addOutput(op4);
 		Step uppercase = new Step(upperProcess);
 		
+		//Outputs
+		Output output = new Output("out", w);
+		OutputParameter op1 = new OutputSource(output,op4);
+		OutputParameter op2 = new OutputType(output, Types.String);
+		output.addOutputParameter(op1);
+		output.addOutputParameter(op2);
+
+		w.addOutput(output);
+
 		w.addStep(uppercase);
 		w.addStep(echo);
 

@@ -6,15 +6,12 @@ import java.util.LinkedList;
 import ukt.model.cwlModel.OutputParameters.OutputParameter;
 
 
-public class Output {
-	private String name;
-	private Process parent;
+public class Output extends Linkable{
 	private ArrayList<OutputParameter> parameters;
 
 	
 	public Output(String name, Process parent){
-		this.name = name;
-		this.parent = parent;
+		super(name, parent);
 		this.parameters = new ArrayList<>();
 	}
 	
@@ -33,10 +30,5 @@ public class Output {
 			}
 			return s;
 		}
-	}
-	
-	public String tab() {
-		return this.parent.tab() + "  ";
-		
 	}
 }

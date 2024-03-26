@@ -1,19 +1,20 @@
 package ukt.model.cwlModel.InputParameters;
 
 import ukt.model.cwlModel.Input;
+import ukt.model.cwlModel.Linkable;
 
 public class Source extends InputParameter{
 
-	private String path;
+	private Linkable source;
 	
-	public Source(Input parent, String path) {
+	public Source(Input parent, Linkable source) {
 		super(parent);
-		this.path = path;
+		this.source = source;
 	}
 
 	@Override
 	public String toString() {
-		return this.tab() + "source: " + this.path + "\n";
+		return this.tab() + "source: " + this.source.getCWLPath() + "\n";
 	}
 
 }

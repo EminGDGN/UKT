@@ -15,7 +15,7 @@ public class InputType extends InputParameter{
 
 	@Override
 	public String toString() {
-		return this.tab() + "type:" + this.type.toString() + "\n";
+		return this.tab() + "type: " + this.type.toString() + "\n";
 	}
 
 }
