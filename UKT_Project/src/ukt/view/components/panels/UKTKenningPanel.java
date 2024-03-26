@@ -3,6 +3,7 @@ package ukt.view.components.panels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
@@ -30,6 +31,8 @@ public class UKTKenningPanel extends JPanel {
 	private JButton convertButton;
 	private JButton addSpecificationButton;
 	private JButton addGraphButton;
+	private JLabel specFileName;
+	private JLabel graphFileName;
 
 	
 	private JSplitPane splitPane;
@@ -63,6 +66,10 @@ public class UKTKenningPanel extends JPanel {
         });
 		specificationPanel.add(new JLabel("Specifications file:"));
 		specificationPanel.add(addSpecificationButton);
+		specFileName = new JLabel("");
+		specFileName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN,  13));
+		specFileName.setVisible(false);
+		specificationPanel.add(specFileName);
 		firstPanel.add(specificationPanel, BorderLayout.WEST);
 		firstPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER);
 		northPanel.add(firstPanel);
@@ -76,6 +83,10 @@ public class UKTKenningPanel extends JPanel {
         });
 		graphPanel.add(new JLabel("Graph file:"));
 		graphPanel.add(addGraphButton);
+		graphFileName = new JLabel("");
+		graphFileName.setFont(new Font(Font.SANS_SERIF, Font.PLAIN,  13));
+		graphFileName.setVisible(false);
+		graphPanel.add(graphFileName);
 		secondPanel.add(graphPanel, BorderLayout.WEST);
 		secondPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER);
 		northPanel.add(secondPanel);
@@ -120,5 +131,43 @@ public class UKTKenningPanel extends JPanel {
 
 		add(northPanel, BorderLayout.NORTH);
 		add(splitPane, BorderLayout.CENTER);
+	}
+	
+	public void setGraphButtonEnable(boolean b) {
+		addGraphButton.setEnabled(b);
+	}
+	
+	public void setConvertButtonEnable(boolean b) {
+		convertButton.setEnabled(b);
+	}
+	
+	public void activateSpecFileName(String s) {
+		specFileName.setText(s);
+		addSpecificationButton.setVisible(false);
+		specFileName.setVisible(true);
+	}
+	
+	public void activateGraphFileName(String s) {
+		graphFileName.setText(s);
+		addGraphButton.setVisible(false);
+		graphFileName.setVisible(true);
+	}
+	
+	public void initSpecFileName() {
+		addSpecificationButton.setVisible(true);
+		specFileName.setVisible(false);
+	}
+	
+	public void initGraphFileName() {
+		addGraphButton.setVisible(true);
+		graphFileName.setVisible(false);
+	}
+	
+	public void initCwlGraphTextArea() {
+		cwlGraph.setText("Follow these steps to convert the graph:\n\n1. Add a specifications file\n2. Add a graph file complying with the previous specification\n3. Click on Convert button");
+	}
+	
+	public void setCwlGraphText(String s) {
+		cwlGraph.setText(s);
 	}
 }

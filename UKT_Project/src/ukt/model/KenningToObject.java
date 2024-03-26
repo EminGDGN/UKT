@@ -305,7 +305,7 @@ public class KenningToObject {
 					}
 				}
 				if (!specPresent) {
-					throw new Exception("Spec non complète");
+					throw new Exception("Spec not complete");
 				}
 			}
 		}

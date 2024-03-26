@@ -68,19 +68,34 @@ public class UKTController {
 	
 	private void displayKenningPanel() {
 		view.setPanel(Panel.KENNING_PANEL);
+		view.setKenningInitSpec();
+		view.setKenningInitGraph();
+		view.setKenningAddGraphButtonEnable(false);
+		view.setKenningConvertButtonEnable(false);
 	}
 
 	private void addGraphFile() {
 		File selectedFile = view.showFileChooser("Select a graph", FileType.JSON);
 		if (selectedFile != null) {
-			
+			model.addGraphFile(selectedFile);
+			if (model.isKenningConfigOK()) {
+				view.setKenningConvertButtonEnable(true);
+				view.setKenningGraphFileName(selectedFile.getPath());
+			} else {
+				view.displayErrorMessage("Kenning configuration is not correct");
+				view.setKenningInitSpec();
+				view.setKenningInitGraph();
+				view.setKenningAddGraphButtonEnable(false);
+			}
 		}
 	}
 	
 	private void addSpecFile() {
 		File selectedFile = view.showFileChooser("Select specifications", FileType.JSON);
 		if (selectedFile != null) {
-			
+			model.addSpecificationFile(selectedFile);
+			view.setKenningAddGraphButtonEnable(true);
+			view.setKenningSpecFileName(selectedFile.getPath());
 		}
 	}
 	

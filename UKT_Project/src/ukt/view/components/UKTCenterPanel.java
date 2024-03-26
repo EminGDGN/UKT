@@ -42,5 +42,13 @@ public class UKTCenterPanel extends JPanel {
 	public void setPanelVisible(Panel p) {
 		this.cardLayout.show(this, p.getName());
 	}
+	
+	public UKTKenningPanel getKenningPanel() {
+		return kenningPanel;
+	}
+	
+	public UKTWorkflowPanel getWorkflowPanel() {
+		return workflowPanel;
+	}
 
 }

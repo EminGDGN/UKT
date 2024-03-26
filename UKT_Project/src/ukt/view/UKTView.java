@@ -100,4 +100,28 @@ public class UKTView extends JFrame {
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
+    
+    public void setKenningAddGraphButtonEnable(boolean b) {
+    	centerPanel.getKenningPanel().setGraphButtonEnable(b);
+    }
+    
+    public void setKenningConvertButtonEnable(boolean b) {
+    	centerPanel.getKenningPanel().setConvertButtonEnable(b);
+    }
+    
+    public void setKenningSpecFileName(String s) {
+    	centerPanel.getKenningPanel().activateSpecFileName(s);
+    }
+    
+    public void setKenningGraphFileName(String s) {
+    	centerPanel.getKenningPanel().activateGraphFileName(s);
+    }
+    
+    public void setKenningInitSpec() {
+    	centerPanel.getKenningPanel().initSpecFileName();
+    }
+    
+    public void setKenningInitGraph() {
+    	centerPanel.getKenningPanel().initGraphFileName();
+    }
 }
