@@ -38,8 +38,7 @@ public abstract class Process {
 			 		for (Input input : inputs) {
 						s+= input.toString();
 					}
-					s+= "\n" +
-					this.tab() + "out: ";
+					s+= this.tab() + "out: ";
 					for (Output output : outputs) {
 						s+= output.toString();
 					}
@@ -58,6 +57,14 @@ public abstract class Process {
 			return this.parent.tab() + "  ";
 		}
 		return "";
+	}
+	
+	public Process getParent() {
+		return this.parent;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 	
 	

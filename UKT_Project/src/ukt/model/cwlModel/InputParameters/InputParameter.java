@@ -13,4 +13,6 @@ public abstract class InputParameter {
 	public String tab() {
 		return this.parent.tab() +  "  ";
 	}
+	
+	public abstract String toString();
 }
