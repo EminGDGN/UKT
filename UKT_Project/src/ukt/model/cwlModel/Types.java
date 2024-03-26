@@ -20,4 +20,10 @@ public enum Types {
 	public String toString() {
 	    return prettyName;
 	}
+	
+	public static Types getEnum(String value) {
+        for(Types t : values())
+            if(t.toString().equalsIgnoreCase(value)) return t;
+        throw new IllegalArgumentException();
+    }
 }

@@ -27,6 +27,14 @@ public abstract class Process {
 		this.outputs.add(output);
 	}
 	
+	public  ArrayList<Input> getInputs(){
+		return this.inputs;
+	}
+	
+	public  ArrayList<Output> getOuputs(){
+		return this.outputs;
+	}
+	
 	public String toString() {
 		return "cwlVersion: v" + this.version + "\n";
 	}
