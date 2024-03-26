@@ -12,7 +12,7 @@ public class Interface {
 	private String name; // Name of the interface
 	private boolean enabled; // Is the interface enabled
 	private Direction direction; // The direction of this interface (In, Out, Inout)
-	private String type;
+	private String type; // Type of the interface (String, int, boolean...)
 	
 	public Interface(String id, String name) {
 		this.id = id;
@@ -82,6 +82,6 @@ public class Interface {
 	 * Print all informations about the node
 	 */
 	public void print() {
-		System.out.println("L'interface d'id : " + this.id + " à pour nom : " + this.name + " elle est " + (this.enabled ? "active" : "désactive") + " et de direction " + this.directionToString(this.direction) + " et de type " + this.type);
+		System.out.println("The interface of id : " + this.id + " as the name : " + this.name + " he is " + (this.enabled ? "active" : "inactive") + " and of direction " + this.directionToString(this.direction) + " and of type " + this.type);
 	}
 }
