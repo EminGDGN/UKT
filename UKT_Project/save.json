@@ -1,0 +1,65 @@
+{
+    "graph": {
+        "id": "78cc86c4-9ad0-4a8f-88cb-71ee28c48659",
+        "nodes": [
+            {
+                "id": "fd1918d1-6b6f-4323-8b52-eb4c658ad262",
+                "position": {
+                    "x": 540,
+                    "y": -80
+                },
+                "width": 200,
+                "twoColumn": true,
+                "interfaces": [
+                    {
+                        "name": "StringUpper",
+                        "id": "a218e824-00e6-457e-bf0b-aabf9edc2538",
+                        "direction": "output",
+                        "side": "right",
+                        "sidePosition": 0
+                    }
+                ],
+                "properties": [
+                    {
+                        "name": "String",
+                        "id": "f02a2c86-f321-4a78-aba6-8076bf7cc2b9",
+                        "value": ""
+                    }
+                ],
+                "enabledInterfaceGroups": [],
+                "name": "ToUpperCase",
+                "instanceName": "ToUpperCase"
+            },
+            {
+                "id": "1a4feb37-cc2a-460f-a553-9b9cb6ce4ba6",
+                "position": {
+                    "x": 1121,
+                    "y": -12
+                },
+                "width": 200,
+                "twoColumn": true,
+                "interfaces": [
+                    {
+                        "name": "String",
+                        "id": "3e5acdfb-6f55-48b3-a75e-bdb8f46f2528",
+                        "direction": "input",
+                        "side": "left",
+                        "sidePosition": 0
+                    }
+                ],
+                "properties": [],
+                "enabledInterfaceGroups": [],
+                "name": "Echo",
+                "instanceName": "Echo"
+            }
+        ],
+        "connections": [
+            {
+                "id": "e106c31e-c8ce-40df-9669-9d4f16f3cf80",
+                "from": "a218e824-00e6-457e-bf0b-aabf9edc2538",
+                "to": "3e5acdfb-6f55-48b3-a75e-bdb8f46f2528"
+            }
+        ]
+    },
+    "version": "20230830.11"
+}

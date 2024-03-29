@@ -31,4 +31,12 @@ public class Output extends Linkable{
 			return s;
 		}
 	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public ArrayList<OutputParameter> getParametrers(){
+		return this.parameters;
+	}
 }
