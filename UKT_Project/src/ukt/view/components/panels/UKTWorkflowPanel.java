@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,7 +35,12 @@ public class UKTWorkflowPanel extends JPanel {
 	
 	// Right panel components
 	private JPanel rightPanel;
-	private JTextArea textArea;
+	private JTextArea cwlText;
+	private JToolBar cwlToolBar;
+	private JButton runButton;
+	private JTextArea cwlResult;
+	private JPanel topRightPanel;
+	private JSplitPane cwlSplitPane;
 	
 	public UKTWorkflowPanel(UKTController controller) {
 		
@@ -64,11 +70,41 @@ public class UKTWorkflowPanel extends JPanel {
 		
 		// Right panel
 		rightPanel = new JPanel(new BorderLayout());
-		textArea = new JTextArea();
-		rightPanel.add(textArea, BorderLayout.CENTER);
+		topRightPanel = new JPanel(new BorderLayout());
+		
+		cwlToolBar = new JToolBar();
+		cwlToolBar.setLayout(new BorderLayout());
+		cwlToolBar.setFloatable(false);
+		runButton = new JButton("Run");
+		runButton.setEnabled(false);
+		cwlToolBar.add(runButton, BorderLayout.EAST);
+		
+		cwlText = new JTextArea();
+		initCwlText();
+		cwlText.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		cwlText.setEditable(false);
+		
+		topRightPanel.add(cwlText, BorderLayout.CENTER);
+		topRightPanel.add(cwlToolBar, BorderLayout.NORTH);
+		
+		cwlResult = new JTextArea();
+		initCwlResult();
+		cwlResult.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		cwlResult.setEditable(false);
+		
+		cwlSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,topRightPanel,cwlResult);
+		rightPanel.add(cwlSplitPane, BorderLayout.CENTER);
 	
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
 		
 		add(splitPane);
+	}
+	
+	public void initCwlText() {
+		cwlText.setText("Follow these steps to create a workflow:\n\n1. Add a process to the list (click on [+] button)\n2. Configure the order of processes and their parameters\n3. Click on Run button");
+	}
+	
+	public void initCwlResult() {
+		cwlResult.setText("No results yet. Create a workflow before running it");
 	}
 }
