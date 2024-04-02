@@ -137,4 +137,8 @@ public class Graph {
 			c.print();
 		}
 	}
+	
+	public String getName(){
+		return this.name;
+	}
 }

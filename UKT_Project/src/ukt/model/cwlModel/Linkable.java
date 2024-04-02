@@ -26,4 +26,8 @@ public abstract class Linkable {
 			return this.parent.getName() + "/" + this.name;
 		}
 	}
+	
+	public Process getParent() {
+		return this.parent;
+	}
 }
