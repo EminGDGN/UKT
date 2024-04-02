@@ -14,5 +14,6 @@ public abstract class OutputParameter {
 		return this.parent.tab() + "  ";
 	}
 	
+	public abstract String toString();
 	
 }

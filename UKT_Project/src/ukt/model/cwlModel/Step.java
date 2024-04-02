@@ -10,14 +10,29 @@ public class Step{
 	
 	public Step(Process process){
 		this.process = process;
+		this.nextSteps = new ArrayList<>();
+		this.previousSteps = new ArrayList<>();
 	}
 	
 	public String toString() {
 		return process.toStep();
 	}
 	
-	public Process process() {
-		return process;
+	public  ArrayList<Process> getNextSteps() {
+		return this.nextSteps;
 	}
+	
+	public  ArrayList<Process> getPreviousSteps() {
+		return this.previousSteps;
+	}
+	
+	public void addNextSteps(Process p) {
+		this.nextSteps.add(p);
+	}
+	
+	public void addPreviousSteps(Process p) {
+		this.previousSteps.add(p);
+	}
+	
 
 }

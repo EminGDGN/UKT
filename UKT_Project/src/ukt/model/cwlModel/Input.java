@@ -1,46 +1,29 @@
 package ukt.model.cwlModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import ukt.model.cwlModel.InputParameters.InputParameter;
 
-public class Input {
+public class Input extends Linkable{
 
-	private Process parent;
-	private String name;
-	private Types type;
-	private String path;
-	private LinkedList<InputParameter> parameters;
+	private ArrayList<InputParameter> parameters;
 	
-	//constructor used in inputs clause => type is known
-	public Input(String name, Types type, Process parent){
-		this.name = name;
-		this.type = type;
-		this.parent = parent;
-		this.parameters = new LinkedList<>();
+	public Input(String name, Process parent){
+		super(name, parent);
+		this.parameters = new ArrayList<>();
 	}
 	
-	//constructor use in "in" clause => when previous parameter is known
-	public Input(String name, String path, Process parent){
-		this.name = name;
-		this.path = path;
-		this.parent = parent;
-		this.parameters = new LinkedList<>();
-
+	public void addInputParameter(InputParameter ip) {
+		this.parameters.add(ip);
 	}
 	
 	@Override
 	public String toString() {
-		String s = this.tab() + this.name + ": \n" +
-				((this.path != null)? this.tab() + "  source: " + this.path : this.tab() + "  type: " + this.type.toString());
+		String s = this.tab() + this.name + ": \n";
 		for (InputParameter parameter : parameters) {
 			s += parameter.toString();
 		}
 		return s;
 				
-	}
-	
-	public String tab() {
-		return this.parent.tab() + "  ";
-		
 	}
 }
