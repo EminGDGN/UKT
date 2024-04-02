@@ -17,12 +17,12 @@ public class CommandLineTool extends Process{
 					s+= "\n" +
 					"\n" +
 					"inputs: ";
-					for (Input input : inputs) {
+					for (Linkable input : inputs) {
 						s+= input.toString();
 					}
 					s+= "\n" +
 					"outputs: \n";
-					for (Output output : outputs) {
+					for (Linkable output : outputs) {
 						s+= output.toString();
 					}
 		return s;

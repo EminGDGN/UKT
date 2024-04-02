@@ -30,4 +30,8 @@ public abstract class Linkable {
 	public Process getParent() {
 		return this.parent;
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 }

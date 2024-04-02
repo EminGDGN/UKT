@@ -34,5 +34,9 @@ public class Step{
 		this.previousSteps.add(p);
 	}
 	
+	public Process getProcess() {
+		return this.process;
+	}
+	
 
 }

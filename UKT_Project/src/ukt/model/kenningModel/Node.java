@@ -35,6 +35,20 @@ public class Node {
 	
 	/**
 	 * 
+	 * @param p a property
+	 * @return true if this node contains the property p false otherwise
+	 */
+	public boolean containProperty (Property p) {
+		for (Property pr : this.properties) {
+			if (pr.getId().equals(p.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
 	 * @return all in, out, inout interface/property of this node
 	 */
 	public ArrayList<Parameter> getParameters() {
