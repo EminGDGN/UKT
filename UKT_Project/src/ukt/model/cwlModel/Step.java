@@ -15,5 +15,9 @@ public class Step{
 	public String toString() {
 		return process.toStep();
 	}
+	
+	public Process process() {
+		return process;
+	}
 
 }

@@ -19,6 +19,42 @@ public abstract class Process {
 		inputs = new ArrayList<Input>();
 	}
 	
+	
+	
+	public Process getParent() {
+		return parent;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public float getVersion() {
+		return version;
+	}
+
+
+
+	public ArrayList<Output> getOutputs() {
+		return outputs;
+	}
+
+
+
+	public ArrayList<Input> getInputs() {
+		return inputs;
+	}
+	
+	public void setInputs(ArrayList<Input> inputs) {
+		this.inputs = inputs;
+	}
+
+
+
 	public void addInput(Input input) {
 		this.inputs.add(input);
 	}
@@ -39,7 +75,7 @@ public abstract class Process {
 						s+= input.toString();
 					}
 					s+= "\n" +
-					this.tab() + "out: ";
+					this.tab() + "out: \n";
 					for (Output output : outputs) {
 						s+= output.toString();
 					}

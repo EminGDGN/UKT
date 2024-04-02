@@ -23,10 +23,10 @@ public static void main(String[] args) {
 		Workflow w = new Workflow(1.2f, "echoUppercase", null);
 		
 		//Inputs
-		w.addInput(new Input("message", Types.String, w));
+		w.addInput(new Input("message", Types.STRING, w));
 		
 		//Outputs
-		Output output = new Output("out", Types.String, w);
+		Output output = new Output("out", Types.STRING, w);
 		OutputParameter op = new OutputSource(output,"uppercase/uppercase_message");
 		output.addOutputParameter(op);
 		w.addOutput(output);
