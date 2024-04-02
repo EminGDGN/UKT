@@ -16,6 +16,10 @@ public class Property {
 		//this.value = value;
 	}
 	
+	public String getId() {
+		return this.id;
+	}
+	
 	public String getType() {
 		return this.type;
 	}
