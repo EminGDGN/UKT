@@ -23,11 +23,14 @@ public class UKTController {
 			case CREATE_WORKFLOW:
 				this.createWorkflow();
 				break;
-			case ADD_PROCESS_WORKFLOW:
-				this.addProcessToWorkflow();
+			case ADD_BASECOMMAND1_WORKFLOW:
+				this.addBaseCommandOneToWorkflow();
 				break;
-			case REMOVE_PROCESS_WORKFLOW:
-				this.removeProcessToWorkflow();
+			case ADD_BASECOMMAND2_WORKFLOW:
+				this.addBaseCommandTwoToWorkflow();
+				break;
+			case RESET_KENNING_VIEW:
+				this.initKenningView();
 				break;
 			case ADD_SPECIFICATION_FILE:
 				this.addSpecFile();
@@ -37,6 +40,12 @@ public class UKTController {
 				break;
 			case CONVERT_KENNING_TO_CWL:
 				this.convertKenningToCWL();
+				break;
+			case MERGE_BASECOMMAND:
+				this.mergeBaseCommand();
+				break;
+			case RESET_WORKFLOW_VIEW:
+				this.initWorkflowView();
 				break;
 			case RUN_CWL:
 				this.runCWL();
@@ -52,24 +61,71 @@ public class UKTController {
 		}
 	}
 	
+	private void initWorkflowView() {
+		view.setWorkflowInitBC1();
+		view.setWorkflowInitBC2();
+		view.setWorkflowInitCwlText();
+		view.setWorkflowResetButtonEnable(false);
+		view.setWorkflowMergeButtonEnable(false);
+		view.setWorkflowInitCwlResult();
+	}
+
+	private void mergeBaseCommand() {
+		// TODO Auto-generated method stub
+	}
+
 	private void createWorkflow() {
 		view.setPanel(Panel.WORKFLOW_PANEL);
+		view.setWorkflowInitBC1();
+		view.setWorkflowInitBC2();
+		view.setWorkflowInitCwlText();
+		view.setWorkflowResetButtonEnable(false);
+		view.setWorkflowMergeButtonEnable(false);
+		view.setWorkflowInitCwlResult();
 	}
 	
-	private void addProcessToWorkflow() {
-		File selectedFile = view.showFileChooser("Select a graph", FileType.CWL);
+	private void addBaseCommandOneToWorkflow() {
+		File selectedFile = view.showFileChooser("Select a BaseCommand 1", FileType.CWL);
 		if (selectedFile != null) {
-			
+			model.addBaseCommandOneFile(selectedFile);
+			if (model.isBaseCommandOK()) {
+				view.setWorkflowBC1FileName(selectedFile.getPath());
+				view.setWorkflowResetButtonEnable(true);
+			} else {
+				view.displayErrorMessage("The imported CWL file is not of type BaseCommand.");
+				initWorkflowView();
+			}
 		}
 	}
 	
-	private void removeProcessToWorkflow() {
+	private void addBaseCommandTwoToWorkflow() {
+		File selectedFile = view.showFileChooser("Select a BaseCommand 2", FileType.CWL);
+		if (selectedFile != null) {
+			model.addBaseCommandTwoFile(selectedFile);
+			if (model.isBaseCommandOK()) {
+				view.setWorkflowMergeButtonEnable(true);
+				view.setWorkflowBC2FileName(selectedFile.getPath());
+			} else {
+				view.displayErrorMessage("The imported CWL file is not of type BaseCommand.");
+				initWorkflowView();
+			}
+		}
 	}
-	
+		
 	private void displayKenningPanel() {
 		view.setPanel(Panel.KENNING_PANEL);
 		view.setKenningInitSpec();
 		view.setKenningInitGraph();
+		view.setKenningAddGraphButtonEnable(false);
+		view.setKenningConvertButtonEnable(false);
+		view.setKenningInitCwlGraph();
+	}
+	
+	private void initKenningView() {
+		view.setKenningInitSpec();
+		view.setKenningInitGraph();
+		view.setKenningInitCwlGraph();
+		view.setKenningResetButtonEnable(false);
 		view.setKenningAddGraphButtonEnable(false);
 		view.setKenningConvertButtonEnable(false);
 	}
@@ -95,11 +151,19 @@ public class UKTController {
 		if (selectedFile != null) {
 			model.addSpecificationFile(selectedFile);
 			view.setKenningAddGraphButtonEnable(true);
+			view.setKenningResetButtonEnable(true);
 			view.setKenningSpecFileName(selectedFile.getPath());
 		}
 	}
 	
 	private void convertKenningToCWL() {
+		try {
+			String stringCwl = model.getCWLConverted();
+			view.setKenningCwlGraphText(stringCwl);
+		} catch (Exception e) {
+			view.displayErrorMessage("Error has occurred during conversion");
+			view.setKenningInitCwlGraph();
+		}
 	}
 	
 	private void runCWL() {

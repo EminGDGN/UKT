@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
@@ -29,6 +30,7 @@ public class UKTKenningPanel extends JPanel {
 	// North panel components
 	private JPanel northPanel;
 	private JButton convertButton;
+	private JButton resetButton;
 	private JButton addSpecificationButton;
 	private JButton addGraphButton;
 	private JLabel specFileName;
@@ -40,6 +42,7 @@ public class UKTKenningPanel extends JPanel {
 	// Left panel components
 	private JPanel leftPanel;
 	private JTextArea cwlGraph;
+	private JScrollPane scrollPane;
 	private JToolBar leftToolBar;
 	private JButton runButton;
 
@@ -93,18 +96,28 @@ public class UKTKenningPanel extends JPanel {
 
 		JPanel errorPanel = new JPanel(new BorderLayout());
 		errorPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		resetButton = new JButton("Reset all");
+		resetButton.setEnabled(false);
+		resetButton.addActionListener((ActionEvent e) -> {
+            controller.handleCommand(Command.RESET_KENNING_VIEW);
+        });
 		convertButton = new JButton("Convert");
 		convertButton.setEnabled(false);
 		convertButton.addActionListener((ActionEvent e) -> {
             controller.handleCommand(Command.CONVERT_KENNING_TO_CWL);
         });
-		errorPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER); // Pour étirer l'espace horizontal
-		errorPanel.add(convertButton, BorderLayout.EAST);
+		errorPanel.add(Box.createHorizontalGlue(), BorderLayout.CENTER);
+		JPanel panelButton = new JPanel(new FlowLayout());
+		panelButton.add(resetButton);
+		panelButton.add(convertButton);
+		errorPanel.add(panelButton, BorderLayout.EAST);
 		northPanel.add(errorPanel);
 		
 		// Left panel
 		leftPanel = new JPanel(new BorderLayout());
-		cwlGraph = new JTextArea("Follow these steps to convert the graph:\n\n1. Add a specifications file\n2. Add a graph file complying with the previous specification\n3. Click on Convert button");
+		cwlGraph = new JTextArea();
+		scrollPane = new JScrollPane(cwlGraph);
+		initCwlGraphTextArea();
 		cwlGraph.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlGraph.setEditable(false);
 		leftToolBar = new JToolBar();
@@ -117,13 +130,15 @@ public class UKTKenningPanel extends JPanel {
         });
 		leftToolBar.add(runButton, BorderLayout.EAST);
 		
-		leftPanel.add(cwlGraph, BorderLayout.CENTER);
-		leftPanel.add(leftToolBar, BorderLayout.SOUTH);
+		leftPanel.add(scrollPane, BorderLayout.CENTER);
+		leftPanel.add(leftToolBar, BorderLayout.NORTH);
 		
 		// Right panel
 		rightPanel = new JPanel(new BorderLayout());
 		cwlResult = new JTextArea();
-		cwlResult.setEnabled(false);
+		initCwlResult();
+		cwlResult.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		cwlResult.setEditable(false);
 		
 		rightPanel.add(cwlResult, BorderLayout.CENTER);
 
@@ -132,9 +147,13 @@ public class UKTKenningPanel extends JPanel {
 		add(northPanel, BorderLayout.NORTH);
 		add(splitPane, BorderLayout.CENTER);
 	}
-	
+		
 	public void setGraphButtonEnable(boolean b) {
 		addGraphButton.setEnabled(b);
+	}
+	
+	public void setResetButtonEnable(boolean b) {
+		resetButton.setEnabled(b);
 	}
 	
 	public void setConvertButtonEnable(boolean b) {
@@ -161,6 +180,10 @@ public class UKTKenningPanel extends JPanel {
 	public void initGraphFileName() {
 		addGraphButton.setVisible(true);
 		graphFileName.setVisible(false);
+	}
+	
+	public void initCwlResult() {
+		cwlResult.setText("No results yet. Convert a CWL Workflow before running it.");
 	}
 	
 	public void initCwlGraphTextArea() {

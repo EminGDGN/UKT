@@ -2,6 +2,8 @@ package ukt.model.kenningModel;
 
 import java.util.ArrayList;
 
+import ukt.model.kenningModel.Parameter.Type;
+
 public class Graph {
 	
 	private String id; // Id of the graph
@@ -32,6 +34,24 @@ public class Graph {
 			}
 		}
 		return allInterfaces;
+	}
+	
+	public ArrayList<Node> getNodeConnectedTo (Parameter p) {
+		if (p.getParamType() == Type.PROPERTY) {
+			return null;
+		} else {
+			Interface i = this.getInterface(p.getId());
+			return this.getSuivant(this.getNodeOfInterface(i));
+		}
+	}
+	
+	public Interface getInterface (String id) {
+		for (Interface i : this.getInterfaces()) {
+			if (i.getId().equals(id)) {
+				return i;
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -116,5 +136,9 @@ public class Graph {
 		for (Connection c : this.connections) {
 			c.print();
 		}
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 }

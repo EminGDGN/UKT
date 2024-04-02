@@ -3,6 +3,7 @@ package ukt.model.kenningModel;
 import java.util.ArrayList;
 
 import ukt.model.kenningModel.Interface.Direction;
+import ukt.model.kenningModel.Parameter.Type;
 
 public class Node {
 	
@@ -40,11 +41,11 @@ public class Node {
 		ArrayList<Parameter> result = new ArrayList<>();
 		
 		for (Interface i : this.interfaces) {
-			result.add(new Parameter(i.getName(), i.getType(), i.getDirection()));
+			result.add(new Parameter(i.getName(), i.getType(), i.getDirection(), i.getId(), Type.INTERFACE));
 		}
 		
 		for (Property p : this.properties) {
-			result.add(new Parameter(p.getName(), p.getType(), p.getDirection()));
+			result.add(new Parameter(p.getName(), p.getType(), p.getDirection(), p.getId(), Type.PROPERTY));
 		}
 		
 		return result;
@@ -67,7 +68,7 @@ public class Node {
 		
 		for (Interface i : this.interfaces) {
 			if (i.getDirection() == Direction.OUT || i.getDirection() == Direction.INOUT) {
-				result.add(new Parameter(i.getName(), i.getType(), i.getDirection()));
+				result.add(new Parameter(i.getName(), i.getType(), i.getDirection(), i.getId(), Type.INTERFACE));
 			}
 		}
 		
@@ -83,12 +84,12 @@ public class Node {
 		
 		for (Interface i : this.interfaces) {
 			if (i.getDirection() == Direction.IN || i.getDirection() == Direction.INOUT) {
-				result.add(new Parameter(i.getName(), i.getType(), i.getDirection()));
+				result.add(new Parameter(i.getName(), i.getType(), i.getDirection(), i.getId(), Type.INTERFACE));
 			}
 		}
 		
 		for (Property p : this.properties) {
-			result.add(new Parameter(p.getName(), p.getType(), p.getDirection()));
+			result.add(new Parameter(p.getName(), p.getType(), p.getDirection(), p.getId(), Type.PROPERTY));
 		}
 		
 		return result;

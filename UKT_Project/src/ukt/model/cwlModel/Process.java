@@ -27,6 +27,14 @@ public abstract class Process {
 		this.outputs.add(output);
 	}
 	
+	public  ArrayList<Input> getInputs(){
+		return this.inputs;
+	}
+	
+	public  ArrayList<Output> getOuputs(){
+		return this.outputs;
+	}
+	
 	public String toString() {
 		return "cwlVersion: v" + this.version + "\n";
 	}
@@ -38,7 +46,7 @@ public abstract class Process {
 			 		for (Input input : inputs) {
 						s+= input.toString();
 					}
-					s+= this.tab() + "out: ";
+					s+= this.tab() + "out: \n";
 					for (Output output : outputs) {
 						s+= output.toString();
 					}

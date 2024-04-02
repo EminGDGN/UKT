@@ -101,6 +101,10 @@ public class UKTView extends JFrame {
         JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
     }
     
+    public void setKenningResetButtonEnable(boolean b) {
+    	centerPanel.getKenningPanel().setResetButtonEnable(b);
+    }
+    
     public void setKenningAddGraphButtonEnable(boolean b) {
     	centerPanel.getKenningPanel().setGraphButtonEnable(b);
     }
@@ -124,4 +128,53 @@ public class UKTView extends JFrame {
     public void setKenningInitGraph() {
     	centerPanel.getKenningPanel().initGraphFileName();
     }
+    
+    public void setKenningInitCwlGraph() {
+    	centerPanel.getKenningPanel().initCwlGraphTextArea();
+    }
+    
+    public void setKenningCwlGraphText(String s) {
+    	centerPanel.getKenningPanel().setCwlGraphText(s);
+    }
+        
+    public void setWorkflowResetButtonEnable(boolean b) {
+    	centerPanel.getWorkflowPanel().setResetButtonEnable(b);
+    }
+        
+    public void setWorkflowMergeButtonEnable(boolean b) {
+    	centerPanel.getWorkflowPanel().setMergeButtonEnable(b);
+    }
+    
+    public void setWorkflowBC1FileName(String s) {
+    	centerPanel.getWorkflowPanel().activateBC1FileName(s);
+    }
+    
+    public void setWorkflowBC2FileName(String s) {
+    	centerPanel.getWorkflowPanel().activateBC2FileName(s);
+    }
+    
+    public void setWorkflowInitBC1() {
+    	centerPanel.getWorkflowPanel().initBC1FileName();
+    }
+    
+    public void setWorkflowInitBC2() {
+    	centerPanel.getWorkflowPanel().initBC2FileName();
+    }
+    
+    public void setWorkflowInitCwlText() {
+    	centerPanel.getWorkflowPanel().initCwlText();
+    }
+    
+    public void setWorkflowCwlText(String s) {
+    	centerPanel.getWorkflowPanel().setCwlText(s);
+    }
+    
+    public void setWorkflowInitCwlResult() {
+    	centerPanel.getWorkflowPanel().initCwlResult();
+    }
+    
+    public void setWorkflowCwlResult(String s) {
+    	centerPanel.getWorkflowPanel().setCwlResult(s);
+    }
+    
 }
