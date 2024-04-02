@@ -2,13 +2,13 @@ package ukt.model.cwlModel;
 
 public enum Types {
 	
-	String("string"),
-	Boolean("boolean"),
-	Integer("int"),
-	Long("long"),
-	Float("foat"),
-	Double("double"),
-	Null("null");
+	STRING("string"),
+	BOOLEAN("boolean"),
+	INTEGER("int"),
+	LONG("long"),
+	FLOAT("foat"),
+	DOUBLE("double"),
+	NULL("null");
 	
 	public final String prettyName;
 	
