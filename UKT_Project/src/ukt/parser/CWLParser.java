@@ -42,7 +42,7 @@ public class CWLParser {
 		}
 	}
 	
-	private Step parse(File file, Process parent) {
+	public Step parse(File file, Process parent) {
 		Step result = null;
 		try{
 			FileInputStream fis = new FileInputStream(file);
@@ -82,20 +82,22 @@ public class CWLParser {
 		return result;
 	}
 	
+	
 	public Input parseInputs(BufferedReader br, Process parent) throws IOException{
 		try {
 			String[] temp = br.readLine().split(":");
 			String name = temp[0].trim();
 			if(!name.equals("outputs")) {
-				String type = temp[1].trim();
-				type = (!type.equals(""))?type : br.readLine().split(": ")[1];
+				String type = (temp.length > 1)?temp[1].trim():""; 
+				type = (type.equals(""))? br.readLine().split(": ")[1] : type;
 				Input in = new Input(name, parent);
 				in.addInputParameter(new InputType(in, Types.valueOf(type.toUpperCase())));
 				return in;
 			}
 			return null;
-		}catch(IllegalArgumentException e) {
-			skip(br);
+		}
+		catch(IllegalArgumentException e) {
+			while(!br.readLine().trim().equals("outputs:"));
 			return null;
 		}
 	}
