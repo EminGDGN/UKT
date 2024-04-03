@@ -56,11 +56,11 @@ public class UKTWorkflowPanel extends JPanel {
 
 		JPanel firstPanel = new JPanel(new BorderLayout());
 		JPanel bc1Panel = new JPanel(new FlowLayout());
-		addFirstProcessButton = new JButton("Add BaseCommand");
+		addFirstProcessButton = new JButton("Add CWL file");
 		addFirstProcessButton.addActionListener((ActionEvent e) -> {
 			controller.handleCommand(Command.ADD_BASECOMMAND1_WORKFLOW);
 		});
-		bc1Panel.add(new JLabel("BaseCommand 1 file:"));
+		bc1Panel.add(new JLabel("CommandLineTool file:"));
 		bc1Panel.add(addFirstProcessButton);
 		bc1Label = new JLabel("");
 		bc1Label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
@@ -72,11 +72,11 @@ public class UKTWorkflowPanel extends JPanel {
 
 		JPanel secondPanel = new JPanel(new BorderLayout());
 		JPanel bc2Panel = new JPanel(new FlowLayout());
-		addSecondProcessButton = new JButton("Add BaseCommand");
+		addSecondProcessButton = new JButton("Add CWL file");
 		addSecondProcessButton.addActionListener((ActionEvent e) -> {
 			controller.handleCommand(Command.ADD_BASECOMMAND2_WORKFLOW);
 		});
-		bc2Panel.add(new JLabel("BaseCommand 2 file:"));
+		bc2Panel.add(new JLabel("CommandLineTool/ExpressionTool file:"));
 		bc2Panel.add(addSecondProcessButton);
 		bc2Label = new JLabel("");
 		bc2Label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
@@ -136,7 +136,7 @@ public class UKTWorkflowPanel extends JPanel {
 
 	public void initCwlText() {
 		cwlText.setText(
-				"Follow these steps to create a workflow:\n\n1. Add no more than two BaseCommand\n2. Configure the order of processes and their parameters\n3. Click on Run button");
+				"Follow these steps to create a workflow:\n\n1. Add no more than two CommandLineTool or one CommandLineTool with ExpressionTool.\n2. Click on Merge button\n3. Click on Run button");
 	}
 
 	public void initCwlResult() {
