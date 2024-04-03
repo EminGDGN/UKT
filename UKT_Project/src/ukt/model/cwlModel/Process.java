@@ -46,7 +46,7 @@ public abstract class Process {
 			 		for (Linkable input : inputs) {
 						s+= input.toString();
 					}
-					s+= this.tab() + "out: \n";
+					s+= this.tab() + "out:";
 					for (Linkable output : outputs) {
 						s+= output.toString();
 					}

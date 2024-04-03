@@ -24,7 +24,8 @@ public class Output extends Linkable{
 		if(this.parameters.size() == 0) {
 			return " ["+this.name+"]\n";
 		}else {
-			String s = this.tab() + this.name + ": \n";
+			
+			String s = "\n" + this.tab() + this.name + ": \n";
 			for (OutputParameter parameter : parameters) {
 				s += parameter.toString();
 			}

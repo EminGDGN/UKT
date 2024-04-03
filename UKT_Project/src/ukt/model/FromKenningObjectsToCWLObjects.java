@@ -94,7 +94,8 @@ private ArrayList<Parameter> getMainOutParameters(){
 				for(Node node: targets) {
 					//adds input
 					Process process = this.workflow.getStepByName(node.getName()).getProcess();
-					Input input = new Input(inParameter.getName(), process);
+					Input input = new Input(this.getCorrespondingParameterName(node, inParameter), process);
+					System.out.println(inParameter.getName() + "   " + node.getName());
 					//input.addInputParameter(new InputType(input,Types.getEnum(inParameter.getType().toLowerCase())));
 					input.addInputParameter(new Source(input, previousProcess.getLinkableByName(inParameter.getName())));
 					process.addInput(input);
@@ -103,7 +104,7 @@ private ArrayList<Parameter> getMainOutParameters(){
 					ArrayList<Parameter> outParameters = node.getOutParameters();
 					for(Parameter outParameter: outParameters) {
 						Output output = new Output(outParameter.getName(), process);
-						output.addOutputParameter(new OutputType(output,  Types.getEnum(outParameter.getType().toLowerCase())));
+						//output.addOutputParameter(new OutputType(output,  Types.getEnum(outParameter.getType().toLowerCase())));
 						process.addOutput(output);
 						
 						linkParameters(process, outParameters);
@@ -117,6 +118,21 @@ private ArrayList<Parameter> getMainOutParameters(){
 		for(Node node: nodes) {
 			this.workflow.addStep(new Step(new CommandLineTool(1.2f, node.getName(), node.getName(), this.workflow)));
 		}
+	}
+	
+	private String getCorrespondingParameterName(Node n, Parameter p) {	
+		ArrayList<String> ids = this.graph.getNextParametersID(p);
+		ArrayList<Parameter> parameters = n.getInParameters();
+		if(ids != null && parameters != null) {
+			for(String string: ids) {
+				for(Parameter parameter: parameters) {
+					if(string.equals(parameter.getId())) {
+						return parameter.getName();
+					}
+				}
+			}
+		}
+		return p.getName();
 	}
 
 }

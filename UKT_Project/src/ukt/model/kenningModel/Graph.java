@@ -37,6 +37,25 @@ public class Graph {
 		return allInterfaces;
 	}
 	
+	public ArrayList<String> getNextParametersID(Parameter p) {
+		ArrayList<String> result = new ArrayList<>();
+		
+		if (p.getParamType() == Type.PROPERTY) {
+			return null;
+		}
+		
+		Interface i = this.getInterfaceOfParameter(p);
+		
+		for (Connection c : this.connections) {
+			if (c.getIdFrom() == i.getId()) {
+				result.add(c.getIdTo());
+			}
+		}
+		
+		
+		return result;
+	}
+	
 	public ArrayList<Property> getProperties () {
 		ArrayList<Property> allProperties = new ArrayList<Property>();
 		for (Node n : this.nodes) {
@@ -96,6 +115,14 @@ public class Graph {
 			return this.getNodeOfInterface(this.getInterface(p.getId()));
 		} else {
 			return this.getNodeOfProperty(this.getProperty(p.getId()));
+		}
+	}
+	
+	public Interface getInterfaceOfParameter (Parameter p) {
+		if (p.getParamType() == Type.INTERFACE) {
+			return this.getInterface(p.getId());
+		} else {
+			return null;
 		}
 	}
 	

@@ -14,6 +14,7 @@ public class testTranslate {
 	public static void main(String[] args) throws Exception {
 		KenningToObject instance = new KenningToObject("save.json", "sample-specification.json");
 		Graph graph = instance.getGraph();
+		graph.print();
 		FromKenningObjectsToCWLObjects o = new FromKenningObjectsToCWLObjects(graph);
 
 		Workflow workflow = o.getCWLWorkflow();

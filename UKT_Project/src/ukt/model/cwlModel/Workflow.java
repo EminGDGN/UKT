@@ -25,7 +25,7 @@ public class Workflow extends Process{
 			s+= input.toString();
 		}
 		s+= "\n" +
-		"outputs: \n";
+		"outputs:";
 		for (Linkable output : outputs) {
 			s+= output.toString();
 		}
