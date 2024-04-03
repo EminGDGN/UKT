@@ -1,9 +1,10 @@
 package ukt.model.cwlModel;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import ukt.model.cwlModel.OutputParameters.OutputParameter;
+import ukt.model.cwlModel.OutputParameters.OutputSource;
+import ukt.model.cwlModel.OutputParameters.OutputType;
 
 
 public class Output extends Linkable{
@@ -29,11 +30,12 @@ public class Output extends Linkable{
 	}
 
 	public Types getType() {
-		return type;
-	}
-
-	public void setType(Types type) {
-		this.type = type;
+		for(OutputParameter o : parameters) {
+			if(o instanceof OutputType) {
+				return ((OutputType)o).getType();
+			}
+		}
+		return null;
 	}
 
 	public Process getParent() {
@@ -51,6 +53,16 @@ public class Output extends Linkable{
 	public void setParameters(ArrayList<OutputParameter> parameters) {
 		this.parameters = parameters;
 	}
+	
+	public Output clone(Process parent) {
+		Output out = new Output(name, parent);
+		for(OutputParameter p : parameters) {
+			if (!(p instanceof OutputSource)) {
+				out.addOutputParameter(p);
+			}
+		}
+		return out;
+	}
 
 	@Override
 	public String toString() {
@@ -63,13 +75,5 @@ public class Output extends Linkable{
 			}
 			return s;
 		}
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public ArrayList<OutputParameter> getParametrers(){
-		return this.parameters;
 	}
 }

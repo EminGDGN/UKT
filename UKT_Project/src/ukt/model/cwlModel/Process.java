@@ -30,6 +30,10 @@ public abstract class Process {
 	public String getName() {
 		return name;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
 
 
@@ -50,7 +54,7 @@ public abstract class Process {
 	}
 	
 	public void setInputs(ArrayList<Input> inputs) {
-		this.inputs = inputs;
+		this.inputs = (ArrayList<Input>)inputs.clone();
 	}
 
 
@@ -61,14 +65,6 @@ public abstract class Process {
 	
 	public void addOutput(Output output) {
 		this.outputs.add(output);
-	}
-	
-	public  ArrayList<Input> getInputs(){
-		return this.inputs;
-	}
-	
-	public  ArrayList<Output> getOuputs(){
-		return this.outputs;
 	}
 	
 	public String toString() {
@@ -101,14 +97,6 @@ public abstract class Process {
 			return this.parent.tab() + "  ";
 		}
 		return "";
-	}
-	
-	public Process getParent() {
-		return this.parent;
-	}
-	
-	public String getName() {
-		return this.name;
 	}
 	
 	

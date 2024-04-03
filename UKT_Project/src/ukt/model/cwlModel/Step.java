@@ -14,6 +14,10 @@ public class Step{
 		this.previousSteps = new ArrayList<>();
 	}
 	
+	public Process process() {
+		return process;
+	}
+	
 	public String toString() {
 		return process.toStep();
 	}
