@@ -6,38 +6,52 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
 import ukt.controller.Command;
 import ukt.controller.UKTController;
 
 public class UKTMenuBar extends JMenuBar {
-	
-	private UKTController controller;
 
-	public UKTMenuBar(UKTController controller) {	
-		
-		this.controller = controller;
+    private UKTController controller;
 
-		// File menu
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.setMnemonic('F');
+    public UKTMenuBar(UKTController controller) {
+        this.controller = controller;
+        createFileMenu();
+    }
 
-		JMenuItem loadGraphFileMenu = new JMenuItem("Load graph file");
-		loadGraphFileMenu.setMnemonic('L');
-		loadGraphFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, KeyEvent.CTRL_DOWN_MASK));
-		loadGraphFileMenu.addActionListener((ActionEvent e) -> {controller.handleCommand(Command.LOAD_GRAPH);});
-		fileMenu.add(loadGraphFileMenu);
+    private void createFileMenu() {
+        // File menu
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.setMnemonic('F');
 
-		fileMenu.addSeparator();
+        JMenuItem createWorkflowFileMenu = new JMenuItem("Create CWL workflow");
+        createWorkflowFileMenu.setMnemonic('W');
+        createWorkflowFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_W, KeyEvent.CTRL_DOWN_MASK));
+        createWorkflowFileMenu.addActionListener((ActionEvent e) -> {
+            controller.handleCommand(Command.CREATE_WORKFLOW);
+        });
+        fileMenu.add(createWorkflowFileMenu);
 
-		JMenuItem exitFileMenu = new JMenuItem("Exit");
-		exitFileMenu.setMnemonic('x');
-		exitFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_DOWN_MASK));
-		exitFileMenu.addActionListener((ActionEvent e) -> {controller.handleCommand(Command.EXIT_APPLICATION);});
-		fileMenu.add(exitFileMenu);
+        fileMenu.addSeparator();
 
-		// Adding menu
-		add(fileMenu);
-	}
+        JMenuItem loadGraphFileMenu = new JMenuItem("Convert Kenning graph");
+        loadGraphFileMenu.setMnemonic('K');
+        loadGraphFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_K, KeyEvent.CTRL_DOWN_MASK));
+        loadGraphFileMenu.addActionListener((ActionEvent e) -> {
+            controller.handleCommand(Command.DISPLAY_KENNING_PANEL);
+        });
+        fileMenu.add(loadGraphFileMenu);
 
+        fileMenu.addSeparator();
+
+        JMenuItem exitFileMenu = new JMenuItem("Exit");
+        exitFileMenu.setMnemonic('x');
+        exitFileMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, KeyEvent.ALT_DOWN_MASK));
+        exitFileMenu.addActionListener((ActionEvent e) -> {
+            controller.handleCommand(Command.EXIT_APPLICATION);
+        });
+        fileMenu.add(exitFileMenu);
+
+        // Add the main menu to the menu bar
+        add(fileMenu);
+    }
 }

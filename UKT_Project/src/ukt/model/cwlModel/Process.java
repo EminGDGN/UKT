@@ -1,6 +1,7 @@
 package ukt.model.cwlModel;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -21,36 +22,18 @@ public abstract class Process {
 		outputs = new ArrayList<>();
 		inputs = new ArrayList<>();
 	}
-	
-	
-	
-	public Process getParent() {
-		return parent;
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-	
+		
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public float getVersion() {
 		return version;
 	}
 
-
-
 	public ArrayList<Output> getOutputs() {
 		return outputs;
 	}
-
-
 
 	public ArrayList<Input> getInputs() {
 		return inputs;
@@ -60,8 +43,6 @@ public abstract class Process {
 		this.inputs = (ArrayList<Input>)inputs.clone();
 	}
 
-
-
 	public void addInput(Input input) {
 		this.inputs.add(input);
 	}
@@ -69,15 +50,7 @@ public abstract class Process {
 	public void addOutput(Output output) {
 		this.outputs.add(output);
 	}
-	
-	public ArrayList<Input> getInputs(){
-		return this.inputs;
-	}
-	
-	public  ArrayList<Output> getOuputs(){
-		return this.outputs;
-	}
-	
+		
 	public String toString() {
 		return "cwlVersion: v" + this.version + "\n";
 	}
@@ -138,27 +111,5 @@ public abstract class Process {
 		}
 		return null;
 	}
-	
-	public void run(String name) {
-		try {
-			java.lang.Process p = Runtime.getRuntime().exec("cwltool " + name + ".cwl");
-			
-			p.waitFor();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-			String line = "";           
-			while ((line = reader.readLine())!= null) {
-				System.out.println(line);
-			}
-		}
-		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	
 }
