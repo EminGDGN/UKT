@@ -3,6 +3,7 @@ package ukt.model.cwlModel;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import ukt.model.cwlModel.InputParameters.InputParameter;
+import ukt.model.cwlModel.InputParameters.Source;
 
 public class Input extends Linkable{
 
@@ -25,5 +26,15 @@ public class Input extends Linkable{
 		}
 		return s;
 				
+	}
+	
+	public Input clone(Process parent) {
+		Input in = new Input(name, parent);
+		for(InputParameter p : parameters) {
+			if (!(p instanceof Source)) {
+				in.addInputParameter(p);
+			}
+		}
+		return in;
 	}
 }

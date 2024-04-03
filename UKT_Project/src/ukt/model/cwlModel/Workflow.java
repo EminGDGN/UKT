@@ -14,6 +14,10 @@ public class Workflow extends Process{
 	public void addStep(Step s) {
 		this.steps.add(s);
 	}
+	
+	public void setStep(ArrayList<Step> steps) {
+		this.steps = steps;
+	}
 
 	@Override
 	public String toString() {

@@ -19,6 +19,46 @@ public abstract class Process {
 		inputs = new ArrayList<>();
 	}
 	
+	
+	
+	public Process getParent() {
+		return parent;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public float getVersion() {
+		return version;
+	}
+
+
+
+	public ArrayList<Output> getOutputs() {
+		return outputs;
+	}
+
+
+
+	public ArrayList<Input> getInputs() {
+		return inputs;
+	}
+	
+	public void setInputs(ArrayList<Input> inputs) {
+		this.inputs = (ArrayList<Input>)inputs.clone();
+	}
+
+
+
 	public void addInput(Input input) {
 		this.inputs.add(input);
 	}
