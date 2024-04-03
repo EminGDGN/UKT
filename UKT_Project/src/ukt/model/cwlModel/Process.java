@@ -15,8 +15,8 @@ public abstract class Process {
 		this.name = name;
 		this.version = version;
 		this.parent = parent;
-		outputs = new ArrayList<Output>();
-		inputs = new ArrayList<Input>();
+		outputs = new ArrayList<>();
+		inputs = new ArrayList<>();
 	}
 	
 	
@@ -67,6 +67,14 @@ public abstract class Process {
 		this.outputs.add(output);
 	}
 	
+	public ArrayList<Input> getInputs(){
+		return this.inputs;
+	}
+	
+	public  ArrayList<Output> getOuputs(){
+		return this.outputs;
+	}
+	
 	public String toString() {
 		return "cwlVersion: v" + this.version + "\n";
 	}
@@ -75,11 +83,11 @@ public abstract class Process {
 		String s = this.almostTab() + this.name + ":\n" +
 				   this.tab() + "run : " + this.name + ".cwl\n" +
 				   this.tab() +	"in: \n";
-			 		for (Input input : inputs) {
+			 		for (Linkable input : inputs) {
 						s+= input.toString();
 					}
-					s+= this.tab() + "out: \n";
-					for (Output output : outputs) {
+					s+= this.tab() + "out:";
+					for (Linkable output : outputs) {
 						s+= output.toString();
 					}
 		return s;
@@ -97,6 +105,35 @@ public abstract class Process {
 			return this.parent.tab() + "  ";
 		}
 		return "";
+	}
+	
+	public Process getParent() {
+		return this.parent;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean isMainWorkflow() {
+		return this.getParent() == null;
+	}
+	
+	public Linkable getLinkableByName(String name) {
+		if(isMainWorkflow()) {
+			for(Input input: this.inputs) {
+				if(input.getName().equals(name)) {
+					return input;
+				}
+			}
+		}else {
+			for(Output output: this.outputs) {
+				if(output.getName().equals(name)) {
+					return output;
+				}
+			}
+		}
+		return null;
 	}
 	
 	
