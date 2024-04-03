@@ -12,6 +12,10 @@ public class OutputType extends OutputParameter{
 		this.type = type;
 	}
 
+	public Types getType() {
+		return type;
+	}
+	
 	@Override
 	public String toString() {
 		return this.tab() + "type: " + this.type.toString() + "\n";
