@@ -113,10 +113,6 @@ public class UKTView extends JFrame {
     	centerPanel.getKenningPanel().setConvertButtonEnable(b);
     }
     
-    public void setKenningRunButtonEnable(boolean b) {
-    	centerPanel.getKenningPanel().setRunButtonEnable(b);
-    }
-    
     public void setWorkflowRunButtonEnable(boolean b) {
     	centerPanel.getWorkflowPanel().setRunButtonEnable(b);
     }

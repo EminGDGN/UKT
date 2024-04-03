@@ -47,7 +47,7 @@ public class UKTController {
 			case RESET_WORKFLOW_VIEW:
 				this.initWorkflowView();
 				break;
-			case RUN_CWL:
+			case RUN_WORKFLOW:
 				this.runCWL();
 				break;
 			case ADD_GRAPH_FILE:
@@ -127,7 +127,6 @@ public class UKTController {
 		view.setKenningInitGraph();
 		view.setKenningAddGraphButtonEnable(false);
 		view.setKenningConvertButtonEnable(false);
-		view.setKenningRunButtonEnable(false);
 		view.setKenningInitCwlGraph();
 	}
 	
@@ -138,7 +137,6 @@ public class UKTController {
 		view.setKenningResetButtonEnable(false);
 		view.setKenningAddGraphButtonEnable(false);
 		view.setKenningConvertButtonEnable(false);
-		view.setKenningRunButtonEnable(false);
 	}
 
 	private void addGraphFile() {
@@ -171,7 +169,6 @@ public class UKTController {
 		try {
 			String stringCwl = model.getCWLConverted();
 			view.setKenningCwlGraphText(stringCwl);
-			view.setKenningRunButtonEnable(true);
 		} catch (Exception e) {
 			view.displayErrorMessage("Error has occurred during conversion");
 			view.setKenningInitCwlGraph();
@@ -179,6 +176,12 @@ public class UKTController {
 	}
 	
 	private void runCWL() {
+		String res = model.getCWLResult();
+		if (res!=null) {
+			view.setWorkflowCwlResult("Result:\n\n"+res);
+		} else {
+			view.displayErrorMessage("Impossible to run workflow.");
+		}
 	}
 
 

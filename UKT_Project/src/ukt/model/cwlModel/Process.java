@@ -1,5 +1,9 @@
 package ukt.model.cwlModel;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public abstract class Process {
@@ -15,39 +19,21 @@ public abstract class Process {
 		this.name = name;
 		this.version = version;
 		this.parent = parent;
-		outputs = new ArrayList<Output>();
-		inputs = new ArrayList<Input>();
+		outputs = new ArrayList<>();
+		inputs = new ArrayList<>();
 	}
-	
-	
-	
-	public Process getParent() {
-		return parent;
-	}
-
-
-
-	public String getName() {
-		return name;
-	}
-	
+		
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 
 	public float getVersion() {
 		return version;
 	}
 
-
-
 	public ArrayList<Output> getOutputs() {
 		return outputs;
 	}
-
-
 
 	public ArrayList<Input> getInputs() {
 		return inputs;
@@ -57,8 +43,6 @@ public abstract class Process {
 		this.inputs = (ArrayList<Input>)inputs.clone();
 	}
 
-
-
 	public void addInput(Input input) {
 		this.inputs.add(input);
 	}
@@ -66,7 +50,7 @@ public abstract class Process {
 	public void addOutput(Output output) {
 		this.outputs.add(output);
 	}
-	
+		
 	public String toString() {
 		return "cwlVersion: v" + this.version + "\n";
 	}
@@ -75,11 +59,11 @@ public abstract class Process {
 		String s = this.almostTab() + this.name + ":\n" +
 				   this.tab() + "run : " + this.name + ".cwl\n" +
 				   this.tab() +	"in: \n";
-			 		for (Input input : inputs) {
+			 		for (Linkable input : inputs) {
 						s+= input.toString();
 					}
-					s+= this.tab() + "out: \n";
-					for (Output output : outputs) {
+					s+= this.tab() + "out:";
+					for (Linkable output : outputs) {
 						s+= output.toString();
 					}
 		return s;
@@ -99,5 +83,33 @@ public abstract class Process {
 		return "";
 	}
 	
+	public Process getParent() {
+		return this.parent;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean isMainWorkflow() {
+		return this.getParent() == null;
+	}
+	
+	public Linkable getLinkableByName(String name) {
+		if(isMainWorkflow()) {
+			for(Input input: this.inputs) {
+				if(input.getName().equals(name)) {
+					return input;
+				}
+			}
+		}else {
+			for(Output output: this.outputs) {
+				if(output.getName().equals(name)) {
+					return output;
+				}
+			}
+		}
+		return null;
+	}
 	
 }

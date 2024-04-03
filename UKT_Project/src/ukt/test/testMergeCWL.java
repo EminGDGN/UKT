@@ -14,9 +14,9 @@ public class testMergeCWL {
 		ArrayList<File> files = new ArrayList<>();
 		
 		File f1 = new File(path + "/echo.cwl");
-		File f2 = new File(path + "/uppercase.cwl");
+		File f2 = new File(path + "/hello_world.cwl");
 		
-		Workflow test = parser.merge(f1,f2);
+		Workflow test = parser.merge(f2,f1);
 		System.out.println(test.getName() + "\n" + test);
 		
 	}

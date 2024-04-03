@@ -25,12 +25,12 @@ public class Workflow extends Process{
 					"class: Workflow \n" +
 					"\n" +
 					"inputs: \n";
-		for (Input input : inputs) {
+		for (Linkable input : inputs) {
 			s+= input.toString();
 		}
 		s+= "\n" +
-		"outputs: \n";
-		for (Output output : outputs) {
+		"outputs:";
+		for (Linkable output : outputs) {
 			s+= output.toString();
 		}
 		s+= "\n" +
@@ -41,6 +41,15 @@ public class Workflow extends Process{
 		
 		return s;
 		
+	}
+	
+	public Step getStepByName(String name) {
+		for(Step step: steps) {
+			if(step.getProcess().getName().equals(name)) {
+				return step;
+			}
+		}
+		return null;
 	}
 
 }

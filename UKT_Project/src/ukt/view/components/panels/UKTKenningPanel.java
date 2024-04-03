@@ -30,18 +30,10 @@ public class UKTKenningPanel extends JPanel {
 	private JButton addGraphButton;
 	private JLabel specFileName;
 	private JLabel graphFileName;
-	private JSplitPane splitPane;
 
 	// Left panel components
-	private JPanel leftPanel;
 	private JTextArea cwlGraph;
-	private JScrollPane scrollPaneCWLText, scrollPaneCWLResult;
-	private JToolBar leftToolBar;
-	private JButton runButton;
-
-	// Right panel components
-	private JPanel rightPanel;
-	private JTextArea cwlResult;
+	private JScrollPane scrollPaneCWLText;
 
 	public UKTKenningPanel(UKTController controller) {
 
@@ -106,42 +98,14 @@ public class UKTKenningPanel extends JPanel {
 		northPanel.add(errorPanel);
 		
 		// Left panel
-		leftPanel = new JPanel(new BorderLayout());
 		cwlGraph = new JTextArea();
 		scrollPaneCWLText = new JScrollPane(cwlGraph);
 		initCwlGraphTextArea();
 		cwlGraph.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlGraph.setEditable(false);
-		leftToolBar = new JToolBar();
-		leftToolBar.setLayout(new BorderLayout());
-		leftToolBar.setFloatable(false);
-		runButton = new JButton("Run");
-		runButton.setEnabled(false);
-		runButton.addActionListener((ActionEvent e) -> {
-			controller.handleCommand(Command.RUN_WORKFLOW);
-		});
-		runButton.addActionListener((ActionEvent e) -> {
-            controller.handleCommand(Command.RUN_CWL);
-        });
-		leftToolBar.add(runButton, BorderLayout.EAST);
 		
-		leftPanel.add(scrollPaneCWLText, BorderLayout.CENTER);
-		leftPanel.add(leftToolBar, BorderLayout.NORTH);
-		
-		// Right panel
-		rightPanel = new JPanel(new BorderLayout());
-		cwlResult = new JTextArea();
-		scrollPaneCWLResult = new JScrollPane(cwlResult);
-		initCwlResult();
-		cwlResult.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		cwlResult.setEditable(false);
-		
-		rightPanel.add(cwlResult, BorderLayout.CENTER);
-
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-
 		add(northPanel, BorderLayout.NORTH);
-		add(splitPane, BorderLayout.CENTER);
+		add(scrollPaneCWLText, BorderLayout.CENTER);
 	}
 		
 	public void setGraphButtonEnable(boolean b) {
@@ -151,11 +115,7 @@ public class UKTKenningPanel extends JPanel {
 	public void setResetButtonEnable(boolean b) {
 		resetButton.setEnabled(b);
 	}
-	
-	public void setRunButtonEnable(boolean b) {
-		runButton.setEnabled(b);
-	}
-	
+		
 	public void setConvertButtonEnable(boolean b) {
 		convertButton.setEnabled(b);
 	}
@@ -181,11 +141,7 @@ public class UKTKenningPanel extends JPanel {
 		addGraphButton.setVisible(true);
 		graphFileName.setVisible(false);
 	}
-	
-	public void initCwlResult() {
-		cwlResult.setText("No results yet. Convert a CWL Workflow before running it.");
-	}
-	
+		
 	public void initCwlGraphTextArea() {
 		cwlGraph.setText("Follow these steps to convert the graph:\n\n1. Add a specifications file\n2. Add a graph file complying with the previous specification\n3. Click on Convert button");
 	}
