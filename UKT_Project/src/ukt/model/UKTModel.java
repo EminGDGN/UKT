@@ -4,15 +4,19 @@ import java.io.File;
 
 import ukt.model.cwlModel.Workflow;
 import ukt.model.kenningModel.Graph;
+import ukt.parser.CWLParser;
 
 public class UKTModel {
 
 	private KenningToObject kenningParser;
 	private FromKenningObjectsToCWLObjects cwlMaker;
+	private CWLParser cwlParser;
+	private File cwlFile1, cwlFile2;
 
 	public UKTModel() {
 		kenningParser = new KenningToObject();
 		cwlMaker = new FromKenningObjectsToCWLObjects();
+		cwlParser = new CWLParser();
 	}
 
 	public void addSpecificationFile(File file) {
@@ -40,16 +44,24 @@ public class UKTModel {
 	}
 	
 	public void addBaseCommandOneFile(File selectedFile) {
-		// TODO Auto-generated method stub
+		cwlFile1 = selectedFile;
 	}
 
 	public void addBaseCommandTwoFile(File selectedFile) {
-		// TODO Auto-generated method stub
+		cwlFile2 = selectedFile;
 	}
 
-	public boolean isBaseCommandOK() {
-		// TODO Auto-generated method stub
-		return true;
+	public boolean isBaseCommandOneOK() {
+		return !cwlParser.isWorkflow(cwlFile1);
 	}
-
+	
+	public boolean isBaseCommandTwoOK() {
+		return !cwlParser.isWorkflow(cwlFile2);
+	}
+	
+	public String mergeCWL() {
+		Workflow w = cwlParser.merge(cwlFile1, cwlFile2);
+		return w.toString();
+	}
+	
 }

@@ -67,11 +67,19 @@ public class UKTController {
 		view.setWorkflowInitCwlText();
 		view.setWorkflowResetButtonEnable(false);
 		view.setWorkflowMergeButtonEnable(false);
+		view.setWorkflowRunButtonEnable(false);
 		view.setWorkflowInitCwlResult();
 	}
 
 	private void mergeBaseCommand() {
-		// TODO Auto-generated method stub
+		try {
+			String cwlMerged = model.mergeCWL();
+			view.setWorkflowCwlText(cwlMerged);
+			view.setWorkflowRunButtonEnable(true);
+		} catch (Exception e) {
+			view.displayErrorMessage("Error has occurred during merge");
+			initWorkflowView();
+		}
 	}
 
 	private void createWorkflow() {
@@ -81,32 +89,33 @@ public class UKTController {
 		view.setWorkflowInitCwlText();
 		view.setWorkflowResetButtonEnable(false);
 		view.setWorkflowMergeButtonEnable(false);
+		view.setWorkflowRunButtonEnable(false);
 		view.setWorkflowInitCwlResult();
 	}
 	
 	private void addBaseCommandOneToWorkflow() {
-		File selectedFile = view.showFileChooser("Select a BaseCommand 1", FileType.CWL);
+		File selectedFile = view.showFileChooser("Select a CWL file", FileType.CWL);
 		if (selectedFile != null) {
 			model.addBaseCommandOneFile(selectedFile);
-			if (model.isBaseCommandOK()) {
+			if (model.isBaseCommandOneOK()) {
 				view.setWorkflowBC1FileName(selectedFile.getPath());
 				view.setWorkflowResetButtonEnable(true);
 			} else {
-				view.displayErrorMessage("The imported CWL file is not of type BaseCommand.");
+				view.displayErrorMessage("The imported CWL file is not of type CommandLineTool");
 				initWorkflowView();
 			}
 		}
 	}
 	
 	private void addBaseCommandTwoToWorkflow() {
-		File selectedFile = view.showFileChooser("Select a BaseCommand 2", FileType.CWL);
+		File selectedFile = view.showFileChooser("Select a CWL file", FileType.CWL);
 		if (selectedFile != null) {
 			model.addBaseCommandTwoFile(selectedFile);
-			if (model.isBaseCommandOK()) {
+			if (model.isBaseCommandTwoOK()) {
 				view.setWorkflowMergeButtonEnable(true);
 				view.setWorkflowBC2FileName(selectedFile.getPath());
 			} else {
-				view.displayErrorMessage("The imported CWL file is not of type BaseCommand.");
+				view.displayErrorMessage("The imported CWL file is not of type CommandLineTool or ExpressionTool.");
 				initWorkflowView();
 			}
 		}
@@ -118,6 +127,7 @@ public class UKTController {
 		view.setKenningInitGraph();
 		view.setKenningAddGraphButtonEnable(false);
 		view.setKenningConvertButtonEnable(false);
+		view.setKenningRunButtonEnable(false);
 		view.setKenningInitCwlGraph();
 	}
 	
@@ -128,6 +138,7 @@ public class UKTController {
 		view.setKenningResetButtonEnable(false);
 		view.setKenningAddGraphButtonEnable(false);
 		view.setKenningConvertButtonEnable(false);
+		view.setKenningRunButtonEnable(false);
 	}
 
 	private void addGraphFile() {
@@ -160,6 +171,7 @@ public class UKTController {
 		try {
 			String stringCwl = model.getCWLConverted();
 			view.setKenningCwlGraphText(stringCwl);
+			view.setKenningRunButtonEnable(true);
 		} catch (Exception e) {
 			view.displayErrorMessage("Error has occurred during conversion");
 			view.setKenningInitCwlGraph();

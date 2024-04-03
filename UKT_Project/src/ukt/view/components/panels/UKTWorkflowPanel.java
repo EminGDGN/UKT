@@ -4,20 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
-import javax.swing.JTree;
 
 import ukt.controller.Command;
 import ukt.controller.UKTController;
@@ -26,17 +22,15 @@ public class UKTWorkflowPanel extends JPanel {
 
 	private UKTController controller;
 
-	private JSplitPane splitPane;
-
 	// Left panel components
 	private JPanel northPanel;
 	private JButton addFirstProcessButton;
 	private JButton addSecondProcessButton;
 	private JLabel bc1Label, bc2Label;
 	private JButton resetButton, mergeButton;
+	private JScrollPane scrollPaneCWLText, scrollPaneCWLResult;
 
 	// Right panel components
-	private JPanel rightPanel;
 	private JTextArea cwlText;
 	private JToolBar cwlToolBar;
 	private JButton runButton;
@@ -60,7 +54,7 @@ public class UKTWorkflowPanel extends JPanel {
 		addFirstProcessButton.addActionListener((ActionEvent e) -> {
 			controller.handleCommand(Command.ADD_BASECOMMAND1_WORKFLOW);
 		});
-		bc1Panel.add(new JLabel("CommandLineTool file:"));
+		bc1Panel.add(new JLabel("CommandLineTool/ExpressionTool file:"));
 		bc1Panel.add(addFirstProcessButton);
 		bc1Label = new JLabel("");
 		bc1Label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 13));
@@ -113,22 +107,27 @@ public class UKTWorkflowPanel extends JPanel {
 		cwlToolBar.setFloatable(false);
 		runButton = new JButton("Run");
 		runButton.setEnabled(false);
+		runButton.addActionListener((ActionEvent e) -> {
+			controller.handleCommand(Command.RUN_WORKFLOW);
+		});
 		cwlToolBar.add(runButton, BorderLayout.EAST);
 
 		cwlText = new JTextArea();
+		scrollPaneCWLText = new JScrollPane(cwlText);
 		initCwlText();
 		cwlText.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlText.setEditable(false);
 
-		topRightPanel.add(cwlText, BorderLayout.CENTER);
+		topRightPanel.add(scrollPaneCWLText, BorderLayout.CENTER);
 		topRightPanel.add(cwlToolBar, BorderLayout.NORTH);
 
 		cwlResult = new JTextArea();
+		scrollPaneCWLResult = new JScrollPane(cwlResult);
 		initCwlResult();
 		cwlResult.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlResult.setEditable(false);
 
-		cwlSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, topRightPanel, cwlResult);
+		cwlSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, topRightPanel, scrollPaneCWLResult);
 
 		add(northPanel, BorderLayout.NORTH);
 		add(cwlSplitPane, BorderLayout.CENTER);
@@ -149,6 +148,10 @@ public class UKTWorkflowPanel extends JPanel {
 	
 	public void setMergeButtonEnable(boolean b) {
 		mergeButton.setEnabled(b);
+	}
+	
+	public void setRunButtonEnable(boolean b) {
+		runButton.setEnabled(b);
 	}
 	
 	public void activateBC1FileName(String s) {

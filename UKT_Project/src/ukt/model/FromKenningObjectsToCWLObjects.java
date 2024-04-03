@@ -177,7 +177,7 @@ public class FromKenningObjectsToCWLObjects {
 		for(Output output: outputs) {
 			Output op = new Output(output.getName(), workflow);
 			op.addOutputParameter(new OutputSource(op, output));
-			for (OutputParameter outputParameter : output.getParametrers()) {
+			for (OutputParameter outputParameter : output.getParameters()) {
 				op.addOutputParameter(outputParameter);
 			}
 			workflow.addOutput(op);

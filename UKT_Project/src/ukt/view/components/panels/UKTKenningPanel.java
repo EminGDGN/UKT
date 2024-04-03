@@ -1,18 +1,14 @@
 package ukt.view.components.panels;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -26,7 +22,6 @@ public class UKTKenningPanel extends JPanel {
 
 	private UKTController controller;
 
-
 	// North panel components
 	private JPanel northPanel;
 	private JButton convertButton;
@@ -35,17 +30,14 @@ public class UKTKenningPanel extends JPanel {
 	private JButton addGraphButton;
 	private JLabel specFileName;
 	private JLabel graphFileName;
-
-	
 	private JSplitPane splitPane;
 
 	// Left panel components
 	private JPanel leftPanel;
 	private JTextArea cwlGraph;
-	private JScrollPane scrollPane;
+	private JScrollPane scrollPaneCWLText, scrollPaneCWLResult;
 	private JToolBar leftToolBar;
 	private JButton runButton;
-
 
 	// Right panel components
 	private JPanel rightPanel;
@@ -116,7 +108,7 @@ public class UKTKenningPanel extends JPanel {
 		// Left panel
 		leftPanel = new JPanel(new BorderLayout());
 		cwlGraph = new JTextArea();
-		scrollPane = new JScrollPane(cwlGraph);
+		scrollPaneCWLText = new JScrollPane(cwlGraph);
 		initCwlGraphTextArea();
 		cwlGraph.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlGraph.setEditable(false);
@@ -126,16 +118,20 @@ public class UKTKenningPanel extends JPanel {
 		runButton = new JButton("Run");
 		runButton.setEnabled(false);
 		runButton.addActionListener((ActionEvent e) -> {
+			controller.handleCommand(Command.RUN_WORKFLOW);
+		});
+		runButton.addActionListener((ActionEvent e) -> {
             controller.handleCommand(Command.RUN_CWL);
         });
 		leftToolBar.add(runButton, BorderLayout.EAST);
 		
-		leftPanel.add(scrollPane, BorderLayout.CENTER);
+		leftPanel.add(scrollPaneCWLText, BorderLayout.CENTER);
 		leftPanel.add(leftToolBar, BorderLayout.NORTH);
 		
 		// Right panel
 		rightPanel = new JPanel(new BorderLayout());
 		cwlResult = new JTextArea();
+		scrollPaneCWLResult = new JScrollPane(cwlResult);
 		initCwlResult();
 		cwlResult.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		cwlResult.setEditable(false);
@@ -154,6 +150,10 @@ public class UKTKenningPanel extends JPanel {
 	
 	public void setResetButtonEnable(boolean b) {
 		resetButton.setEnabled(b);
+	}
+	
+	public void setRunButtonEnable(boolean b) {
+		runButton.setEnabled(b);
 	}
 	
 	public void setConvertButtonEnable(boolean b) {
