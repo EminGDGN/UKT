@@ -16,26 +16,43 @@ import ukt.model.cwlModel.Process;
 import ukt.model.cwlModel.Step;
 import ukt.model.cwlModel.Types;
 import ukt.model.cwlModel.Workflow;
+import ukt.model.cwlModel.InputParameters.InputType;
+import ukt.model.cwlModel.InputParameters.Source;
+import ukt.model.cwlModel.OutputParameters.OutputSource;
+import ukt.model.cwlModel.OutputParameters.OutputType;
 
 public class CWLParser {
-	
-	private String path;
 
-	public CWLParser(String path) {
-		this.path = path;
+	public CWLParser() {
 	}
 	
-	public Step parse(String name) {
+	public boolean isWorkflow(File f) {
+		try {
+			FileInputStream fis = new FileInputStream(f);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			
+			//In cwl file version has form cwlVersion : v1.2
+			br.readLine();
+			String classCWL = br.readLine();
+			
+			return classCWL.equals("class: Workflow");
+		} catch(IOException e) {
+			e.printStackTrace();
+			return true;
+		}
+	}
+	
+	private Step parse(File file, Process parent) {
 		Step result = null;
 		try{
-			FileInputStream fis = new FileInputStream(new File(path+"/"+name+".cwl"));
+			FileInputStream fis = new FileInputStream(file);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 			
 			//In cwl file version has form cwlVersion : v1.2
 			float version = Float.valueOf(br.readLine().split(": v")[1]).floatValue();
 			String classCWL = br.readLine();
 			if(classCWL.equals("class: Workflow")) {
-				result = new Step(new Workflow(version, name, null));
+				result = new Step(new Workflow(version, this.getNameWithoutExtansion(file.getName()), parent));
 				
 			}else{
 				skip(br);
@@ -45,7 +62,7 @@ public class CWLParser {
 				}catch(Exception e) {
 					
 				}
-				result = new Step(new CommandLineTool(version, name, baseCommand,null));
+				result = new Step(new CommandLineTool(version, this.getNameWithoutExtansion(file.getName()), baseCommand, parent));
 				
 				while(!br.readLine().equals("inputs:"));
 				Input temp;
@@ -72,7 +89,9 @@ public class CWLParser {
 			if(!name.equals("outputs")) {
 				String type = temp[1].trim();
 				type = (!type.equals(""))?type : br.readLine().split(": ")[1];
-				return new Input(name, Types.valueOf(type.toUpperCase()), parent);
+				Input in = new Input(name, parent);
+				in.addInputParameter(new InputType(in, Types.valueOf(type.toUpperCase())));
+				return in;
 			}
 			return null;
 		}catch(IllegalArgumentException e) {
@@ -87,7 +106,9 @@ public class CWLParser {
 			String name = temp[0].trim();
 			if(!name.equals("")) {
 				String type = (temp.length > 1)?temp[1].trim() : br.readLine().split(": ")[1];
-				return new Output(name, Types.valueOf(type.toUpperCase()), parent);
+				Output out = new Output(name, parent);
+				out.addOutputParameter(new OutputType(out, Types.valueOf(type.toUpperCase())));
+				return out;
 			}
 			return null;
 		}catch(IllegalArgumentException e) {
@@ -99,46 +120,44 @@ public class CWLParser {
 		br.readLine();
 	}
 	
-	public Workflow merge(ArrayList<String> files) {
+	public Workflow merge(File f1, File f2) {
 		ArrayList<Step> steps = new ArrayList<>();
-		
-		for(String s : files) {
-			steps.add(parse(s));
-		}
+		Workflow result = new Workflow(1.2f, "", null);
+		steps.add(parse(f1, result));
+		steps.add(parse(f2, result));
 		
 		String nameMerge = "";
-		ArrayList<Output> previousOutput = null;
-		ArrayList<Output> firstOutputs = null;
-		Workflow result = new Workflow(1.2f, nameMerge, null);
-		int i = 1;
+		Output firstOut = null;
 		for(Step s : steps) {
 			Process p = s.process();
 			nameMerge += p.getName();
-			if(previousOutput != null) {
+			if(firstOut == null) {
+				
+				Input in = p.getInputs().get(0);
+				Input clone = in.clone(result);
+				result.addInput(clone);
+				in.addInputParameter(new Source(in, clone));
+				firstOut = p.getOutputs().get(0);
+				
+				nameMerge += "_";
 				
 			}else {
-				result.setInputs(p.getInputs());
-				firstOutputs = p.getOutputs();
+				Input in = p.getInputs().get(0);
+				in.addInputParameter(new Source(in, firstOut));
+				Output o = p.getOutputs().get(0);
+				Output out = new Output(o.getName(), result);
+				out.addOutputParameter(new OutputType(out, o.getType()));
+				out.addOutputParameter(new OutputSource(out, o));
+				result.addOutput(out);
 			}
 			
-			if(i == steps.size()) {
-				for(Output o : firstOutputs) {
-					result.addOutput(new Output(o.getName(),o.getType(), result));
-				}
-			}
-			else {
-				i++;
-			}
 		}
-		
-		
-		try {
-			BufferedWriter br = new BufferedWriter(new FileWriter(nameMerge));
-			
-			
-			return result;
-		}catch(IOException e) {
-			return null;
-		}
+		result.setName(nameMerge);
+		result.setStep(steps);
+		return result;
+	}
+	
+	public String getNameWithoutExtansion(String f) {
+		return f.replaceFirst("[.][^.]+$", "");
 	}
 }
