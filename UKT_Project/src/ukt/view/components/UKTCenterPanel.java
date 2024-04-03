@@ -1,11 +1,7 @@
 package ukt.view.components;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import ukt.controller.Panel;
 import ukt.controller.UKTController;
 import ukt.view.components.panels.UKTHomePanel;

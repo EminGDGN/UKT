@@ -184,7 +184,6 @@ public class UKTController {
 		}
 	}
 
-
 	private void exitApplication() {
 		System.exit(0);
 	}
