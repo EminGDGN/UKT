@@ -66,7 +66,7 @@ public class Output extends Linkable{
 
 	@Override
 	public String toString() {
-		if(this.parameters.size() == 0) {
+		if(!this.parent.isMainWorkflow()) {
 			return " ["+this.name+"]\n";
 		}else {
 			
