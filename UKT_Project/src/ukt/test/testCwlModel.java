@@ -29,7 +29,7 @@ public static void main(String[] args) {
 		
 		//Inputs
 		Input mainInput = new Input("message", w);
-		InputParameter miParameter = new InputType(mainInput, Types.String);
+		InputParameter miParameter = new InputType(mainInput, Types.STRING);
 		mainInput.addInputParameter(miParameter);
 		w.addInput(mainInput);
 		
@@ -59,7 +59,7 @@ public static void main(String[] args) {
 		//Outputs
 		Output output = new Output("out", w);
 		OutputParameter op1 = new OutputSource(output,op4);
-		OutputParameter op2 = new OutputType(output, Types.String);
+		OutputParameter op2 = new OutputType(output, Types.STRING);
 		output.addOutputParameter(op1);
 		output.addOutputParameter(op2);
 

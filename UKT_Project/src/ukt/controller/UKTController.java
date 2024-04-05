@@ -3,6 +3,7 @@ package ukt.controller;
 import java.io.File;
 
 import ukt.model.UKTModel;
+import ukt.model.cwlModel.Input;
 import ukt.view.UKTView;
 
 public class UKTController {
@@ -77,6 +78,7 @@ public class UKTController {
 			view.setWorkflowCwlText(cwlMerged);
 			view.setWorkflowRunButtonEnable(true);
 		} catch (Exception e) {
+			e.printStackTrace();
 			view.displayErrorMessage("Error has occurred during merge");
 			initWorkflowView();
 		}
@@ -176,6 +178,17 @@ public class UKTController {
 	}
 	
 	private void runCWL() {
+		if (model.doesCurrentWorkflowNeedsInputs()) {
+			for (Input i : model.currentWorkflowInputs()) {
+				String value = view.showOptionPane("Enter value for input "+i.getName());
+				if (value==null) { // set default value
+					model.addInputValue(i.getName(), "DEFAULT_VALUE");
+				} else {
+					value = value.replace(" ", "_");
+					model.addInputValue(i.getName(), value);
+				}
+			}
+		}
 		String res = model.getCWLResult();
 		if (res!=null) {
 			view.setWorkflowCwlResult("Result:\n\n"+res);

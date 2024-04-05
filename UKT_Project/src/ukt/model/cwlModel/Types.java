@@ -8,7 +8,9 @@ public enum Types {
 	LONG("long"),
 	FLOAT("foat"),
 	DOUBLE("double"),
-	NULL("null");
+	NULL("null"),
+	DIRECTORY("Directory"),
+	FILE("File");
 	
 	public final String prettyName;
 	

@@ -52,10 +52,11 @@ public class CWLParser {
 				result = new Step(new Workflow(version, this.getNameWithoutExtansion(file.getName()), parent));
 				
 			}else{
-				skip(br);
+				String s = br.readLine();
+				s = (s.isEmpty()) ? br.readLine() : s;
 				String baseCommand = "";
 				try {
-					baseCommand = br.readLine().split(": ")[1];
+					baseCommand = s.split(": ")[1];
 				}catch(Exception e) {
 					
 				}
@@ -88,7 +89,7 @@ public class CWLParser {
 				String type = (temp.length > 1)?temp[1].trim():""; 
 				type = (type.equals(""))? br.readLine().split(": ")[1] : type;
 				Input in = new Input(name, parent);
-				in.addInputParameter(new InputType(in, Types.valueOf(type.toUpperCase())));
+				in.addInputParameter(new InputType(in, Types.getEnum(type)));
 				return in;
 			}
 			return null;
@@ -106,11 +107,11 @@ public class CWLParser {
 			if(!name.equals("")) {
 				String type = (temp.length > 1)?temp[1].trim() : br.readLine().split(": ")[1];
 				Output out = new Output(name, parent);
-				out.addOutputParameter(new OutputType(out, Types.valueOf(type.toUpperCase())));
+				out.addOutputParameter(new OutputType(out, Types.getEnum(type)));
 				return out;
 			}
 			return null;
-		}catch(IllegalArgumentException e) {
+		}catch(Exception e) {
 			return null;
 		}
 	}

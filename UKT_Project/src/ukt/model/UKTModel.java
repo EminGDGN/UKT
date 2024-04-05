@@ -11,7 +11,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import ukt.model.cwlModel.Input;
 import ukt.model.cwlModel.Workflow;
 import ukt.model.kenningModel.Graph;
 import ukt.parser.CWLParser;
@@ -24,6 +28,7 @@ public class UKTModel {
 	private File cwlFile1, cwlFile2;
 	private Workflow currentWorkflow;
 	private String lastFilePathWorkflowToRun;
+	private HashMap<String, String> inputsValues;
 
 	public UKTModel() {
 		kenningParser = new KenningToObject();
@@ -89,7 +94,8 @@ public class UKTModel {
 	
 	public String mergeCWL() throws Exception {
 	    Workflow w = cwlParser.merge(cwlFile1, cwlFile2);
-	    
+	    currentWorkflow = w;
+	    inputsValues = new HashMap<>();
 	    String mergedStringWorkflow = w.toString();
 	    String folderPath = System.getProperty("user.home") + File.separator + "UKT";
 	    String fileName = cwlParser.getNameWithoutExtansion(cwlFile1.getName()) + "_" + cwlFile2.getName();
@@ -120,9 +126,29 @@ public class UKTModel {
 	    return mergedStringWorkflow;
 	}
 	
+	public boolean doesCurrentWorkflowNeedsInputs() {
+		return currentWorkflow.getInputs().size()!=0;
+	}
+	
+	public ArrayList<Input> currentWorkflowInputs() {
+		return currentWorkflow.getInputs();
+	}
+	
+	public void addInputValue(String key, String value) {
+		inputsValues.put(key, value);
+	}
+	
 	public String getCWLResult() {
 		try {
-			java.lang.Process p = Runtime.getRuntime().exec("cwltool " +lastFilePathWorkflowToRun);
+			String commandLine = "cwltool "+lastFilePathWorkflowToRun;
+			
+			for(Map.Entry<String, String> entry : inputsValues.entrySet()) {
+			    String key = entry.getKey();
+			    String value = entry.getValue();
+			    commandLine += " --"+key+"="+value;
+			}
+
+			java.lang.Process p = Runtime.getRuntime().exec(commandLine);
 			
 			p.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
