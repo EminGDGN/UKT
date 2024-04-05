@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Clock;
 
 import ukt.model.cwlModel.Workflow;
@@ -102,6 +106,16 @@ public class UKTModel {
 	    } catch (IOException e) {
 	    	throw new Exception();
 	    }
+	    
+	    Path sourceFile1 = Paths.get(cwlFile1.getPath());
+	    Path sourceFile2 = Paths.get(cwlFile2.getPath());
+	    Path targetFolder = Paths.get(folderPath);
+	    
+	    Path targetFile1 = targetFolder.resolve(cwlFile1.getName());
+	    Path targetFile2 = targetFolder.resolve(cwlFile2.getName());
+	    
+	    Files.copy(sourceFile1, targetFile1, StandardCopyOption.REPLACE_EXISTING);
+	    Files.copy(sourceFile2, targetFile2, StandardCopyOption.REPLACE_EXISTING);
 
 	    return mergedStringWorkflow;
 	}
