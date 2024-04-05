@@ -11,6 +11,9 @@ public class Defalut extends InputParameter{
 		this.defaultValue = defalutValue;
 	}
 	
+	/**
+	 * @return a string describing the default input in cwl format
+	 */
 	@Override
 	public String toString() {
 		return this.tab() + "default: "+ this.defaultValue+"\n";

@@ -18,6 +18,9 @@ public class Input extends Linkable{
 		this.parameters.add(ip);
 	}
 	
+	/**
+	 * @return a string describing this output to cwl format
+	 */
 	@Override
 	public String toString() {
 		String s = this.tab() + this.name + ": \n";

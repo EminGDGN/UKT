@@ -1,10 +1,8 @@
 package ukt.model.cwlModel;
 
-import java.util.ArrayList;
-
 public abstract class Linkable {
 
-	protected Process parent;
+	protected Process parent;					// Process containing this linkable
 	protected String name;
 	
 	public Linkable(String name, Process parent){
@@ -14,13 +12,21 @@ public abstract class Linkable {
 	
 	public abstract String toString();
 	
+	/**
+	 * 
+	 * @return indentation for cwl 
+	 */
 	public String tab() {
 		return this.parent.tab() + "  ";
 		
 	}
 	
+	/**
+	 * 
+	 * @return a String conataining the path used in 'source' field
+	 */
 	public String getCWLPath() {
-		if(this.parent.getParent() == null) {
+		if(this.parent.isMainWorkflow()) {
 			return this.name;
 		}else {
 			return this.parent.getName() + "/" + this.name;

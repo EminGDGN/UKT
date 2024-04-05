@@ -12,6 +12,9 @@ public class OutputSource extends OutputParameter{
 		this.source = source;
 	}
 	
+	/**
+	 * @return a string describing an output source in cwl format
+	 */
 	@Override
 	public String toString() {
 		return this.tab() + "outputSource: " + this.source.getCWLPath() + "\n";

@@ -3,16 +3,10 @@ package ukt.model.cwlModel.InputParameters;
 import ukt.model.cwlModel.Input;
 
 public class InputBinding extends InputParameter{
+	
+		//TO DO -> not complete (only takes position in account
 
 		private int position;
-//		private String prefix;
-//		private boolean separate;
-	
-//		public InputBinding(int position, String prefix, boolean separate) {
-//			this.position = position;
-//			this.prefix = prefix;
-//			this.separate = separate;
-//		}
 		
 		public InputBinding(Input parent, int position) {
 			super(parent);
@@ -21,7 +15,9 @@ public class InputBinding extends InputParameter{
 //			this.separate = false;
 		}
 		
-		
+		/**
+		 * @return a string describing an input binding for an output in cwl format
+		 */
 		@Override
 		public String toString() {
 			return this.tab() + "InputBinding: " +

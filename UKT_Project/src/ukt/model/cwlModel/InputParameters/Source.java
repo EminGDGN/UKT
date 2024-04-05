@@ -12,6 +12,9 @@ public class Source extends InputParameter{
 		this.source = source;
 	}
 
+	/**
+	 * @return a string describing input source in cwl format
+	 */
 	@Override
 	public String toString() {
 		return this.tab() + "source: " + this.source.getCWLPath() + "\n";

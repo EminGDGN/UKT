@@ -10,6 +10,10 @@ public abstract class InputParameter {
 		this.parent = parent;
 	}
 	
+	/**
+	 * 
+	 * @return cwl indentation
+	 */
 	public String tab() {
 		return this.parent.tab() +  "  ";
 	}

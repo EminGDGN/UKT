@@ -8,9 +8,9 @@ import ukt.model.cwlModel.OutputParameters.OutputType;
 
 
 public class Output extends Linkable{
+	
 	private ArrayList<OutputParameter> parameters;
 
-	
 	public Output(String name, Process parent){
 		super(name, parent);
 		this.parameters = new ArrayList<>();
@@ -64,6 +64,9 @@ public class Output extends Linkable{
 		return out;
 	}
 
+	/**
+	 * @return a string describing this output to cwl format
+	 */
 	@Override
 	public String toString() {
 		if(!this.parent.isMainWorkflow()) {

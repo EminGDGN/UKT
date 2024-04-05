@@ -9,6 +9,14 @@ public class CommandLineTool extends Process{
 		this.baseCommand = baseCommand;
 	}
 	
+	public CommandLineTool(String name, String baseCommand){
+		super(name);
+		this.baseCommand = baseCommand;
+	}
+	
+	/**
+	 * @return a string of the entire cwl file for a specified baseCommand and its parameters
+	 */
 	@Override
 	public String toString() {
 		String s = 	super.toString() +
@@ -17,12 +25,12 @@ public class CommandLineTool extends Process{
 					s+= "\n" +
 					"\n" +
 					"inputs: ";
-					for (Linkable input : inputs) {
+					for (Input input : inputs) {
 						s+= input.toString();
 					}
 					s+= "\n" +
 					"outputs: \n";
-					for (Linkable output : outputs) {
+					for (Output output : outputs) {
 						s+= output.toString();
 					}
 		return s;
