@@ -6,8 +6,16 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import ukt.model.cwlModel.Input;
 import ukt.model.cwlModel.Workflow;
 import ukt.model.kenningModel.Graph;
 import ukt.parser.CWLParser;
@@ -20,6 +28,7 @@ public class UKTModel {
 	private File cwlFile1, cwlFile2;
 	private Workflow currentWorkflow;
 	private String lastFilePathWorkflowToRun;
+	private HashMap<String, String> inputsValues;
 
 	public UKTModel() {
 		kenningParser = new KenningToObject();
@@ -85,7 +94,8 @@ public class UKTModel {
 	
 	public String mergeCWL() throws Exception {
 	    Workflow w = cwlParser.merge(cwlFile1, cwlFile2);
-	    
+	    currentWorkflow = w;
+	    inputsValues = new HashMap<>();
 	    String mergedStringWorkflow = w.toString();
 	    String folderPath = System.getProperty("user.home") + File.separator + "UKT";
 	    String fileName = cwlParser.getNameWithoutExtansion(cwlFile1.getName()) + "_" + cwlFile2.getName();
@@ -102,13 +112,43 @@ public class UKTModel {
 	    } catch (IOException e) {
 	    	throw new Exception();
 	    }
+	    
+	    Path sourceFile1 = Paths.get(cwlFile1.getPath());
+	    Path sourceFile2 = Paths.get(cwlFile2.getPath());
+	    Path targetFolder = Paths.get(folderPath);
+	    
+	    Path targetFile1 = targetFolder.resolve(cwlFile1.getName());
+	    Path targetFile2 = targetFolder.resolve(cwlFile2.getName());
+	    
+	    Files.copy(sourceFile1, targetFile1, StandardCopyOption.REPLACE_EXISTING);
+	    Files.copy(sourceFile2, targetFile2, StandardCopyOption.REPLACE_EXISTING);
 
 	    return mergedStringWorkflow;
 	}
 	
+	public boolean doesCurrentWorkflowNeedsInputs() {
+		return currentWorkflow.getInputs().size()!=0;
+	}
+	
+	public ArrayList<Input> currentWorkflowInputs() {
+		return currentWorkflow.getInputs();
+	}
+	
+	public void addInputValue(String key, String value) {
+		inputsValues.put(key, value);
+	}
+	
 	public String getCWLResult() {
 		try {
-			java.lang.Process p = Runtime.getRuntime().exec("cwltool " +lastFilePathWorkflowToRun);
+			String commandLine = "cwltool "+lastFilePathWorkflowToRun;
+			
+			for(Map.Entry<String, String> entry : inputsValues.entrySet()) {
+			    String key = entry.getKey();
+			    String value = entry.getValue();
+			    commandLine += " --"+key+"="+value;
+			}
+
+			java.lang.Process p = Runtime.getRuntime().exec(commandLine);
 			
 			p.waitFor();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
