@@ -6,6 +6,15 @@ public class Workflow extends Process{
 	
 	private ArrayList<Step> steps;
 	
+	/**
+	 * default constructor for a main workflow
+	 * @param name
+	 */
+	public Workflow(String name) {
+		super(name);
+		this.steps = new ArrayList<>();
+	}
+	
 	public Workflow(float version, String name, Process parent) {
 		super(version, name, parent);
 		this.steps = new ArrayList<>();
@@ -15,10 +24,14 @@ public class Workflow extends Process{
 		this.steps.add(s);
 	}
 	
+	
 	public void setStep(ArrayList<Step> steps) {
 		this.steps = steps;
 	}
 
+	/**
+	 * @return a string to cwl format
+	 */
 	@Override
 	public String toString() {
 		String s =  super.toString() + 

@@ -16,6 +16,9 @@ public class OutputType extends OutputParameter{
 		return type;
 	}
 	
+	/**
+	 * @return a string describing a type for an output in cwl format
+	 */
 	@Override
 	public String toString() {
 		return this.tab() + "type: " + this.type.toString() + "\n";

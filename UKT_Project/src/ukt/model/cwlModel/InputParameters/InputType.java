@@ -10,9 +10,11 @@ public class InputType extends InputParameter{
 	public InputType(Input parent, Types type) {
 		super(parent);
 		this.type = type;
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * @return a string describing a type for an input in cwl format
+	 */
 	@Override
 	public String toString() {
 		return this.tab() + "type: " + this.type.toString() + "\n";

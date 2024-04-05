@@ -21,6 +21,11 @@ public enum Types {
 	    return prettyName;
 	}
 	
+	/**
+	 * 
+	 * @param value
+	 * @return the enum type corresponding to the string value
+	 */
 	public static Types getEnum(String value) {
         for(Types t : values())
             if(t.toString().equalsIgnoreCase(value)) return t;
