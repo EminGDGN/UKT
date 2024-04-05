@@ -4,15 +4,31 @@
 
 This repository contains the java eclipse project folder ([UKT_Project](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project)).
 
-The code is separated into 2 packages:
+The code is separated into multiple packages:
 
-#### [ukt.ui](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/ui)
+#### [ukt.main](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/main)
 
-This package is used for the user interface
+This package is the entry point for our application and contains the main method.
 
-#### [ukt.fc](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/fc)
+#### [ukt.controller](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/controller)
 
-This package is used for the functionnal core of the application
+This package contains all the classes that make up the application controller.
+
+#### [ukt.model](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/model)
+
+This package contains all the classes that make up the application model.
+
+#### [ukt.parser](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/parser)
+
+This package contains the first implementation of our CWL parser.
+
+#### [ukt.test](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/test)
+
+This package contains the first tests of the application, in particular on the CWL model.
+
+#### [ukt.view](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/tree/main/UKT_Project/src/ukt/view)
+
+This package contains all the classes that make up the graphical interface of the application.
 
 ## Get started
 
@@ -21,9 +37,11 @@ This package is used for the functionnal core of the application
 - Step 3: browse to the UKT_Project eclipse project folder in the git repository you just have cloned
 - Step 4: click on Finish button
 - Step 5: build the UKT project on eclipse
-- Step 6: run UKT project as java application 
+- Step 6: run UKT project as java application by running [ukt.main.Main](https://gricad-gitlab.univ-grenoble-alpes.fr/Projets-INFO4/23-24/06/code/-/blob/main/UKT_Project/src/ukt/main/Main.java). 
 
 Important: you must have java SE SDK 17 installed on your machine
+
+In order to run a CWL workflow you also need to have cwltool installed on your computer. Please install this program by following the instructions [here](https://github.com/common-workflow-language/cwltool).
 
 ## Diagram of branches
 ```mermaid
