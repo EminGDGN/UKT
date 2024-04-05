@@ -22,7 +22,11 @@ public class Input extends Linkable{
 	public String toString() {
 		String s = this.tab() + this.name + ": \n";
 		for (InputParameter parameter : parameters) {
-			s += parameter.toString();
+			if(!this.parent.isMainWorkflow() && !(parameter instanceof Source)) {
+				continue;
+			}else {
+				s += parameter.toString();
+			}
 		}
 		return s;
 				
