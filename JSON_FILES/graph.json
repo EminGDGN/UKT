@@ -1,0 +1,72 @@
+{
+    "graph": {
+        "id": "921fcd91-7cf7-415c-9f90-4d928b462898",
+        "nodes": [
+            {
+                "id": "b0e22ecc-525b-452a-aa63-07e3aa50c9f4",
+                "position": {
+                    "x": 1135,
+                    "y": 305
+                },
+                "width": 200,
+                "twoColumn": true,
+                "interfaces": [
+                    {
+                        "name": "message",
+                        "id": "dbba85b4-986f-46b8-a7e4-1b0230db7e4b",
+                        "direction": "input",
+                        "side": "left",
+                        "sidePosition": 0
+                    },
+                    {
+                        "name": "echo_message",
+                        "id": "163dec0b-e2c5-46b6-ab49-ead76221f977",
+                        "direction": "output",
+                        "side": "right",
+                        "sidePosition": 0
+                    }
+                ],
+                "properties": [],
+                "enabledInterfaceGroups": [],
+                "name": "echo",
+                "instanceName": "echo"
+            },
+            {
+                "id": "ed609982-778c-46a7-9b7d-5b138424dca9",
+                "position": {
+                    "x": 610,
+                    "y": 172
+                },
+                "width": 200,
+                "twoColumn": true,
+                "interfaces": [
+                    {
+                        "name": "uppercase_message",
+                        "id": "430bef7a-6ab6-425c-b7bd-ca030b0d1034",
+                        "direction": "output",
+                        "side": "right",
+                        "sidePosition": 0
+                    }
+                ],
+                "properties": [
+                    {
+                        "name": "message",
+                        "id": "a00f489b-1199-4669-b418-7be6d0c75098",
+                        "value": ""
+                    }
+                ],
+                "enabledInterfaceGroups": [],
+                "name": "uppercase",
+                "instanceName": "uppercase"
+            }
+        ],
+        "connections": [
+            {
+                "id": "7b0f77a9-9730-45de-9c29-c4f7edb3cb98",
+                "from": "430bef7a-6ab6-425c-b7bd-ca030b0d1034",
+                "to": "dbba85b4-986f-46b8-a7e4-1b0230db7e4b"
+            }
+        ]
+    },
+    "version": "20230830.11"
+}

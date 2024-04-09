@@ -1,0 +1,55 @@
+{
+    "version": "20230830.11",
+    "nodes": [
+        {
+            "name": "uppercase",
+            "layer": "test",
+            "category": "test",
+            "properties": [
+                {"name": "message", "type": "string", "default": ""}
+            ],
+            "interfaces": [
+                {"name": "uppercase_message", "type": "string", "direction": "output"}
+            ]
+        },
+        {
+            "name": "echo",
+            "layer": "test",
+            "category": "test",
+            "interfaces": [
+                {"name": "message", "type": "string", "direction": "input"},
+                {"name": "echo_message", "type": "string", "direction": "output"}
+            ]
+        }
+    ],
+    "metadata": {
+        "twoColumn": true,
+        "interfaces": {
+            "BinaryImage": {
+                "interfaceColor": "#FF00FF",
+                "interfaceConnectionPattern": "dashed",
+                "interfaceConnectionColor": "#FF0000"
+            },
+            "Image": {
+                "interfaceConnectionPattern": "dotted",
+                "interfaceConnectionColor": "#FFFF00"
+            }
+        },
+        "connectionStyle": "orthogonal",
+        "layers": [
+            {
+                "name": "IOs",
+                "nodeLayers": ["filesystem"]
+            },
+            {
+                "name": "Binary imaging",
+                "nodeInterfaces": ["BinaryImage"]
+            },
+            {
+                "name": "Both",
+                "nodeLayers": ["processing"],
+                "nodeInterfaces": ["BinaryImage"]
+            }
+        ]
+    }
+}
